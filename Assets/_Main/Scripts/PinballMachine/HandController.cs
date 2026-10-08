@@ -23,7 +23,7 @@ public class HandController : MonoBehaviour
 
     void Start()
     {
-        action = InputManager.GetInputAction(actionName);
+        action = InputManager.Instance.GetInputAction(actionName);
         if (action == null)
         {
             Debug.LogError("Input action not found.");
@@ -31,8 +31,7 @@ public class HandController : MonoBehaviour
         }
 
         action.Enable();
-        action.started += OnAction;
-        action.canceled += OnAction;
+        action.performed += OnAction;
 
         initialRotation = handAnchor.localRotation;
     }
@@ -46,11 +45,11 @@ public class HandController : MonoBehaviour
             return;
         }
 
-        if (context.started && swingCts == null)
-        {
-            await HandleInputStarted();
-        }
-        else if (context.canceled)
+        // if (context.started && swingCts == null)
+        // {
+        //     await HandleInputStarted();
+        // }
+        if (context.performed)
         {
             await HandleInputCanceled();
 
@@ -84,7 +83,10 @@ public class HandController : MonoBehaviour
 
     private async Task HandleInputCanceled()
     {
-        if (swingCts == null) return;
+        if (swingCts == null)
+        {
+            swingCts = new CancellationTokenSource();
+        }
         if (handAnchor == null)
         {
             Debug.LogError("Hand anchor is not assigned.");
@@ -131,8 +133,7 @@ public class HandController : MonoBehaviour
         if (action == null) return;
 
         action.Disable();
-        action.started -= OnAction;
-        action.canceled -= OnAction;
+        action.performed -= OnAction;
 
         if (swingCts != null)
         {

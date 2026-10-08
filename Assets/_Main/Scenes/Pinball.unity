@@ -405,6 +405,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &179392377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179392378}
+  - component: {fileID: 179392379}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &179392378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179392377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &179392379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179392377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7cc958c64237f64c88e1dce55e2fdb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  actionMap: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &225664619
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +770,7 @@ MonoBehaviour:
   angle: 30
   swingDuration: 0.1
   bounciness: 5
-  actionName: LeftHand
+  actionName: Player/LeftHand
   handAnchor: {fileID: 247608884}
   physMat: {fileID: 6200000, guid: f85413a7d46a494429cca55fa34bd5ab, type: 2}
   collider: {fileID: 47738031}
@@ -2475,7 +2520,7 @@ MonoBehaviour:
   angle: -30
   swingDuration: 0.1
   bounciness: 5
-  actionName: RightHand
+  actionName: Player/RightHand
   handAnchor: {fileID: 1795948679}
   physMat: {fileID: 6200000, guid: 0e45240ab4df1544ab83f28f809f952b, type: 2}
   collider: {fileID: 1714608742}
@@ -2872,3 +2917,4 @@ SceneRoots:
   - {fileID: 1879820646}
   - {fileID: 472540293}
   - {fileID: 943839859}
+  - {fileID: 179392378}

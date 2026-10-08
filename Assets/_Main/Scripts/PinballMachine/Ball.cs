@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
-        action = InputManager.GetInputAction(actionName);
+        action = InputManager.Instance.GetInputAction(actionName);
         if (action == null)
         {
             Debug.LogError("Input action not found.");
