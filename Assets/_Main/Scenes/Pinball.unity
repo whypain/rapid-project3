@@ -222,7 +222,7 @@ PolygonCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f85413a7d46a494429cca55fa34bd5ab, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -575,7 +575,7 @@ Transform:
   m_GameObject: {fileID: 227458638}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.40000004, y: 0.35000002, z: 0}
+  m_LocalPosition: {x: 0.36, y: 0.35000002, z: 0}
   m_LocalScale: {x: 0.120000005, y: 0.087467395, z: 0.576189}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -686,6 +686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 247608884}
+  - component: {fileID: 247608885}
   m_Layer: 0
   m_Name: AnchorLeft
   m_TagString: Untagged
@@ -709,6 +710,25 @@ Transform:
   - {fileID: 47738029}
   m_Father: {fileID: 943839859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &247608885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247608883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb172581e6af53479e78fdcdb52a233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandController
+  angle: 30
+  swingDuration: 0.1
+  bounciness: 5
+  actionName: LeftHand
+  handAnchor: {fileID: 247608884}
+  physMat: {fileID: 6200000, guid: f85413a7d46a494429cca55fa34bd5ab, type: 2}
+  collider: {fileID: 47738031}
 --- !u!1 &420762183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,6 +1456,7 @@ GameObject:
   - component: {fileID: 1005614252}
   - component: {fileID: 1005614251}
   - component: {fileID: 1005614253}
+  - component: {fileID: 1005614254}
   m_Layer: 0
   m_Name: ball
   m_TagString: Untagged
@@ -1452,7 +1473,7 @@ Transform:
   m_GameObject: {fileID: 1005614249}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.198, z: 0}
+  m_LocalPosition: {x: -0.019, y: 0.342, z: 0}
   m_LocalScale: {x: 0.07, y: 0.051024657, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1468,7 +1489,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c46d7d59b1e62954aa20141e2976f776, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1577,10 +1598,24 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!114 &1005614254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005614249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9bb5a9c40a0b342b53e6330412418d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ball
+  actionName: ResetBall
+  rb: {fileID: 1005614253}
 --- !u!1 &1111872376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,7 +2311,7 @@ Transform:
   m_GameObject: {fileID: 1714608739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.085999995, y: 0, z: 0}
+  m_LocalPosition: {x: -0.09000002, y: 0, z: 0}
   m_LocalScale: {x: 0.084002726, y: 0.3002733, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2352,7 +2387,7 @@ PolygonCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0e45240ab4df1544ab83f28f809f952b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2401,6 +2436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1795948679}
+  - component: {fileID: 1795948680}
   m_Layer: 0
   m_Name: AnchorRight
   m_TagString: Untagged
@@ -2424,6 +2460,25 @@ Transform:
   - {fileID: 1714608740}
   m_Father: {fileID: 943839859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1795948680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795948678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb172581e6af53479e78fdcdb52a233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandController
+  angle: -30
+  swingDuration: 0.1
+  bounciness: 5
+  actionName: RightHand
+  handAnchor: {fileID: 1795948679}
+  physMat: {fileID: 6200000, guid: 0e45240ab4df1544ab83f28f809f952b, type: 2}
+  collider: {fileID: 1714608742}
 --- !u!1 &1851234453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2707,7 +2762,7 @@ Transform:
   m_GameObject: {fileID: 2107609692}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.40000004, y: 0.35000002, z: 0}
+  m_LocalPosition: {x: -0.36, y: 0.35000002, z: 0}
   m_LocalScale: {x: 0.120000005, y: 0.087467395, z: 0.576189}
   m_ConstrainProportionsScale: 1
   m_Children: []
