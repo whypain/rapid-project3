@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 
 public class BallManager : MonoBehaviour
 {
@@ -15,12 +16,39 @@ public class BallManager : MonoBehaviour
     private List<Ball> activeBalls = new List<Ball>();
     private InputAction action;
 
+    private IObjectPool<Ball> ballPool;
+
     private void Start()
     {
         action = actionRef.action;
 
         action.Enable();
         action.performed += OnAction;
+
+        ballPool = new ObjectPool<Ball>(
+            createFunc: () =>
+            {
+                Ball newBall = Instantiate(ballPrefab, ballParent);
+                newBall.Initialize(this);
+                return newBall;
+            },
+            actionOnGet: (ball) =>
+            {
+                ball.gameObject.SetActive(true);
+                activeBalls.Add(ball);
+            },
+            actionOnRelease: (ball) =>
+            {
+                ball.gameObject.SetActive(false);
+            },
+            // actionOnDestroy: (ball) =>
+            // {
+            //     Destroy(ball.gameObject);
+            // },
+            collectionCheck: true,
+            defaultCapacity: 10,
+            maxSize: 20
+        );
         SpawnBall();
     }
 
@@ -37,9 +65,8 @@ public class BallManager : MonoBehaviour
             return;
         }
 
-        Ball newBall = Instantiate(ballPrefab, ballParent);
-        newBall.Initialize(this);
-        activeBalls.Add(newBall);
+        Ball newBall = ballPool.Get();
+        newBall.ResetBall();
     }
 
     void OnAction(InputAction.CallbackContext _)
@@ -48,7 +75,7 @@ public class BallManager : MonoBehaviour
         {
             if (ball != null)
             {
-                Destroy(ball.gameObject);
+                ballPool.Release(ball);
             }
         }
         activeBalls.Clear();
@@ -66,9 +93,13 @@ public class BallManager : MonoBehaviour
         }
     }
 
-    public void OnBallDestroyed(Ball ball)
+    public void ReleaseBall(Ball ball)
     {
-        activeBalls.Remove(ball);
+        if (activeBalls.Contains(ball))
+        {
+            activeBalls.Remove(ball);
+            ballPool.Release(ball);
+        }
     }
 
     void OnDestroy()

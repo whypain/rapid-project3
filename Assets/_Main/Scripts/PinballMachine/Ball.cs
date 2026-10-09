@@ -12,16 +12,24 @@ public class Ball : MonoBehaviour
         ballManager = manager;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public void ResetBall()
     {
-        if (collision.gameObject.CompareTag("Bumper"))
-        {
-            ballManager.OnBumperHit();
-        }
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        transform.localPosition = Vector3.zero;
+    }
+    
+    public void ReleaseBall()
+    {
+        ballManager.ReleaseBall(this);
     }
 
-    void OnDestroy()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        ballManager.OnBallDestroyed(this);
+        if (collision.gameObject.TryGetComponent(out ICollisionEffect collFX))
+        {
+            ballManager.OnBumperHit();
+            collFX.OnHit(this);
+        }
     }
 }
