@@ -1,49 +1,27 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Ball : MonoBehaviour
 {
-    [Header("Input")]
-    [SerializeField] private string actionName;
-
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
 
-    private Vector3 initialPosition;
-    private InputAction action;
+    private BallManager ballManager;
 
-    void Start()
+    public void Initialize(BallManager manager)
     {
-        action = InputManager.Instance.GetInputAction(actionName);
-        if (action == null)
-        {
-            Debug.LogError("Input action not found.");
-            return;
-        }
-
-        action.Enable();
-        action.performed += OnAction;
-
-        initialPosition = transform.position;
+        ballManager = manager;
     }
 
-    void OnAction(InputAction.CallbackContext _)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (rb == null)
+        if (collision.gameObject.CompareTag("Bumper"))
         {
-            Debug.LogError("Rigidbody2D reference is missing.");
-            return;
+            ballManager.OnBumperHit();
         }
-
-        rb.linearVelocity = Vector2.zero;
-        transform.position = initialPosition;
     }
 
     void OnDestroy()
     {
-        if (action == null) return;
-
-        action.Disable();
-        action.performed -= OnAction;
+        ballManager.OnBallDestroyed(this);
     }
 }
