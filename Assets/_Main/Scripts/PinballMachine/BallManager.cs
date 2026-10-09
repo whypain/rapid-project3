@@ -83,7 +83,7 @@ public class BallManager : MonoBehaviour
         SpawnBall();
     }
 
-    public void OnBumperHit()
+    public void IncrementHitCount()
     {
         currHitCount++;
         if (currHitCount >= dupHitCount)

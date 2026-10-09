@@ -16,6 +16,7 @@ public class HandController : MonoBehaviour
     [SerializeField] private Transform handAnchor;
     [SerializeField] private PhysicsMaterial2D physMat;
     [SerializeField] private Collider2D collider;
+    [SerializeField] private ForceBumper bumper;
 
     private Quaternion initialRotation;
     private CancellationTokenSource swingCts;
@@ -37,7 +38,7 @@ public class HandController : MonoBehaviour
     }
 
 
-    async void OnAction(InputAction.CallbackContext context)
+    async void OnAction(InputAction.CallbackContext _)
     {
         if (collider == null)
         {
@@ -45,40 +46,17 @@ public class HandController : MonoBehaviour
             return;
         }
 
-        // if (context.started && swingCts == null)
-        // {
-        //     await HandleInputStarted();
-        // }
-        if (context.performed)
-        {
-            await HandleInputCanceled();
+        bumper.Activate();
+        await HandleInputCanceled();
+        bumper.Deactivate();
 
-            // prevent the hand from slapping the ball downward if it clips through the ball during the swing
-            collider.enabled = false;
+        // prevent the hand from slapping the ball downward if it clips through the ball during the swing
+        collider.enabled = false;
 
-            // return to initial rotation
-            await QLerp(handAnchor.localRotation, initialRotation, CancellationToken.None);
+        // return to initial rotation
+        await QLerp(handAnchor.localRotation, initialRotation, CancellationToken.None);
 
-            collider.enabled = true;
-        }
-    }
-
-    private async Task HandleInputStarted()
-    {
-        if (swingCts != null) return;
-        if (handAnchor == null)
-        {
-            Debug.LogError("Hand anchor is not assigned.");
-            return;
-        }
-        if (physMat == null)
-        {
-            Debug.LogError("Physics material is not assigned.");
-            return;
-        }
-
-        swingCts = new CancellationTokenSource();
-        await QLerp(handAnchor.localRotation, initialRotation * Quaternion.Euler(new Vector3(0f, 0f, -angle)), swingCts.Token);
+        collider.enabled = true;
     }
 
     private async Task HandleInputCanceled()

@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 47738029}
   - component: {fileID: 47738030}
   - component: {fileID: 47738031}
+  - component: {fileID: 47738032}
   m_Layer: 0
   m_Name: HandLeft
   m_TagString: Untagged
@@ -262,6 +263,20 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 1
+--- !u!114 &47738032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47738028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
+  forceMagnitude: 20
+  bumperCollider: {fileID: 47738031}
 --- !u!1 &65177230
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,11 +889,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandController
   angle: 30
   swingDuration: 0.1
-  bounciness: 5
+  bounciness: 1
   actionName: Player/LeftHand
   handAnchor: {fileID: 247608884}
   physMat: {fileID: 6200000, guid: f85413a7d46a494429cca55fa34bd5ab, type: 2}
   collider: {fileID: 47738031}
+  bumper: {fileID: 47738032}
 --- !u!1 &363921172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2862,6 +2878,7 @@ GameObject:
   - component: {fileID: 1714608740}
   - component: {fileID: 1714608741}
   - component: {fileID: 1714608742}
+  - component: {fileID: 1714608743}
   m_Layer: 0
   m_Name: HandRight
   m_TagString: Untagged
@@ -2994,6 +3011,20 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 1
+--- !u!114 &1714608743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714608739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
+  forceMagnitude: 20
+  bumperCollider: {fileID: 1714608742}
 --- !u!1 &1795948678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3041,11 +3072,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandController
   angle: -30
   swingDuration: 0.1
-  bounciness: 5
+  bounciness: 1
   actionName: Player/RightHand
   handAnchor: {fileID: 1795948679}
   physMat: {fileID: 6200000, guid: 0e45240ab4df1544ab83f28f809f952b, type: 2}
   collider: {fileID: 1714608742}
+  bumper: {fileID: 1714608743}
 --- !u!1 &1851234453
 GameObject:
   m_ObjectHideFlags: 0

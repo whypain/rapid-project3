@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Bumper : MonoBehaviour, ICollisionEffect
 {
-    public void OnHit(Ball ball)
+    public void OnHit(Ball ball, Collision2D collision)
     {
-        // Handle the bumper hit logic here
+        ball.IncrementHitCount();
     }
 }
 
 public interface ICollisionEffect
 {
-    void OnHit(Ball ball);
+    void OnHit(Ball ball, Collision2D collision);
 }

@@ -18,18 +18,27 @@ public class Ball : MonoBehaviour
         rb.angularVelocity = 0f;
         transform.localPosition = Vector3.zero;
     }
+
+    public void AddForce(Vector2 force)
+    {
+        rb.AddForce(force, ForceMode2D.Impulse);
+    }
     
     public void ReleaseBall()
     {
         ballManager.ReleaseBall(this);
     }
 
+    public void IncrementHitCount()
+    {
+        ballManager.IncrementHitCount();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out ICollisionEffect collFX))
         {
-            ballManager.OnBumperHit();
-            collFX.OnHit(this);
+            collFX.OnHit(this, collision);
         }
     }
 }
