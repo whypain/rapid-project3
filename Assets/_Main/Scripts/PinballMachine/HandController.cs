@@ -32,7 +32,9 @@ public class HandController : MonoBehaviour
         }
 
         action.Enable();
-        action.performed += OnAction;
+        //action.performed += OnAction;
+        action.performed += OnActionPressed;
+        action.canceled += OnActionReleased;
 
         initialRotation = handAnchor.localRotation;
     }
@@ -56,6 +58,37 @@ public class HandController : MonoBehaviour
         // return to initial rotation
         await QLerp(handAnchor.localRotation, initialRotation, CancellationToken.None);
 
+        collider.enabled = true;
+    }
+    async void OnActionPressed(InputAction.CallbackContext _)
+    {
+        if (collider == null || handAnchor == null || physMat == null) return;
+        if (swingCts != null)
+        {
+            swingCts.Cancel();
+            swingCts.Dispose();
+        }
+        swingCts = new CancellationTokenSource();
+        bumper.Activate();
+        physMat.bounciness = bounciness;
+        Quaternion targetRotation = initialRotation * Quaternion.Euler(new Vector3(0f, 0f, angle));
+        await QLerp(handAnchor.localRotation, targetRotation, swingCts.Token);
+        physMat.bounciness = 0f;
+        bumper.Deactivate();
+    }
+    private async void OnActionReleased(InputAction.CallbackContext _)
+    {
+        if (collider == null || handAnchor == null || physMat == null) return;
+        if (swingCts != null)
+        {
+            swingCts.Cancel();
+            swingCts.Dispose();
+            swingCts = null;
+        }
+        bumper.Deactivate();
+        physMat.bounciness = 0f;
+        collider.enabled = false;
+        await QLerp(handAnchor.localRotation, initialRotation, CancellationToken.None);
         collider.enabled = true;
     }
 
@@ -104,14 +137,14 @@ public class HandController : MonoBehaviour
 
         handAnchor.localRotation = to;
     }
-
-
     void OnDestroy()
     {
         if (action == null) return;
 
         action.Disable();
-        action.performed -= OnAction;
+        //action.performed -= OnAction;
+        action.performed -= OnActionPressed;
+        action.canceled -= OnActionReleased;
 
         if (swingCts != null)
         {

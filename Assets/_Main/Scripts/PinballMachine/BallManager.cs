@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
+using UnityEngine.UI;
+using TMPro;
 
 public class BallManager : MonoBehaviour
 {
     [SerializeField] private Transform ballParent;
     [SerializeField] private Ball ballPrefab;
     [SerializeField] private int dupHitCount = 8;
-
+    [SerializeField] private TextMeshProUGUI textDupHit;
     [Header("Input")]
     [SerializeField] private InputActionReference actionRef;
 
@@ -86,9 +88,12 @@ public class BallManager : MonoBehaviour
     public void IncrementHitCount()
     {
         currHitCount++;
+        int hit = 8;hit -= currHitCount;
+        textDupHit.text = hit.ToString();
         if (currHitCount >= dupHitCount)
         {
             currHitCount = 0;
+            textDupHit.text = "8";
             SpawnBall();
         }
     }
