@@ -51,7 +51,9 @@ public class BallManager : MonoBehaviour
             defaultCapacity: 10,
             maxSize: 20
         );
+
         SpawnBall();
+        UpdateUI();
     }
 
     void SpawnBall()
@@ -88,14 +90,14 @@ public class BallManager : MonoBehaviour
     public void IncrementHitCount()
     {
         currHitCount++;
-        int hit = 8;hit -= currHitCount;
-        textDupHit.text = hit.ToString();
+
         if (currHitCount >= dupHitCount)
         {
             currHitCount = 0;
-            textDupHit.text = "8";
             SpawnBall();
         }
+
+        UpdateUI();
     }
 
     public void ReleaseBall(Ball ball)
@@ -105,6 +107,11 @@ public class BallManager : MonoBehaviour
             activeBalls.Remove(ball);
             ballPool.Release(ball);
         }
+    }
+
+    private void UpdateUI()
+    {
+        textDupHit.text = $"{dupHitCount - currHitCount}";
     }
 
     void OnDestroy()
