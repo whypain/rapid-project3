@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public float Attack => attack;
+
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
 
