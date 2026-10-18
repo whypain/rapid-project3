@@ -4,7 +4,7 @@ public class Bumper : MonoBehaviour, ICollisionEffect
 {
     public void OnHit(Ball ball, Collision2D collision)
     {
-        ball.IncrementHitCount();
+        ball.OnHit();
     }
 }
 
