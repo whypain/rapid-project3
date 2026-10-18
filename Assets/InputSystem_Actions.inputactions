@@ -525,6 +525,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3b7a3120-f372-4ca4-a659-fb38fb4b180d",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHand",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c0860dea-78b3-45f1-bdf4-d642f3098c11",
                     "path": "<Keyboard>/j",
                     "interactions": "",
@@ -538,6 +549,17 @@
                     "name": "",
                     "id": "a2b6faf8-e5fc-4be6-966b-03c7b8e94776",
                     "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHand",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e796441-8f11-42fb-9264-e2cd143df1ac",
+                    "path": "<Keyboard>/f4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
