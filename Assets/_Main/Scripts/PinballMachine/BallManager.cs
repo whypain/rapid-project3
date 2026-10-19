@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class BallManager : MonoBehaviour
 {
@@ -108,6 +109,7 @@ public class BallManager : MonoBehaviour
             ballPool.Release(ball);
         }
     }
+    List<Ball> GetAllBall;
 
     private void UpdateUI()
     {
