@@ -23,6 +23,9 @@ public class Ball : MonoBehaviour
     public Rigidbody2D Rigidbody => rb;
     public float Attack => attack;
     public int BumperHitCount => bumperHitCount;
+    public Vector2 Velocity => rb.linearVelocity;
+    public float Speed => rb.linearVelocity.magnitude;
+
     private void Awake()
     {
         if (rb == null)
@@ -75,9 +78,15 @@ public class Ball : MonoBehaviour
 
     public void OnHit()
     {
-        ballManager?.IncrementHitCount();
+        // ballManager?.IncrementHitCount();
 
         bumperHitCount++;
+        UpdateStats();
+    }
+
+    public void ResetHitCount()
+    {
+        bumperHitCount = 0;
         UpdateStats();
     }
 
@@ -117,6 +126,15 @@ public class Ball : MonoBehaviour
             collisionEffect.OnHit(this, collision);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out ITriggerEffect triggerEffect))
+        {
+            triggerEffect.OnHit(this);
+        }
+    }
+
     private void ClearPowerUps()
     {
         for (int i = activePowerUps.Count - 1; i >= 0; i--)

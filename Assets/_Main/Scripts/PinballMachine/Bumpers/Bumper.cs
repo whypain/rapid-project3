@@ -12,3 +12,8 @@ public interface ICollisionEffect
 {
     void OnHit(Ball ball, Collision2D collision);
 }
+
+public interface ITriggerEffect
+{
+    void OnHit(Ball ball);
+}

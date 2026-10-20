@@ -1,33 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Pool;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
-public class BallManager : MonoBehaviour
+[DefaultExecutionOrder(-1)]
+public class BallManager : MonoBehaviour, IResetable
 {
+    public static BallManager Instance { get; private set; }
+
     [SerializeField] private Transform ballParent;
     [SerializeField] private Ball ballPrefab;
     [SerializeField] private int dupHitCount = 8;
     [SerializeField] private TextMeshProUGUI textDupHit;
     [Header("Input")]
-    [SerializeField] private InputActionReference actionRef;
 
     private int currHitCount;
     private List<Ball> activeBalls = new List<Ball>();
-    private InputAction action;
 
     private IObjectPool<Ball> ballPool;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     private void Start()
     {
-        action = actionRef.action;
-
-        action.Enable();
-        action.performed += OnAction;
-
         ballPool = new ObjectPool<Ball>(
             createFunc: () =>
             {
@@ -74,7 +78,15 @@ public class BallManager : MonoBehaviour
         newBall.ResetBall();
     }
 
-    void OnAction(InputAction.CallbackContext _)
+    public void SpawnBallAt(Vector3 position, Vector2 velocity)
+    {
+        Ball newBall = ballPool.Get();
+        newBall.ResetBall();
+        newBall.transform.position = position;
+        newBall.AddForce(velocity);
+    }
+
+    public void Reset()
     {
         foreach (var ball in activeBalls)
         {
@@ -109,16 +121,9 @@ public class BallManager : MonoBehaviour
             ballPool.Release(ball);
         }
     }
-    List<Ball> GetAllBall;
 
     private void UpdateUI()
     {
         textDupHit.text = $"{dupHitCount - currHitCount}";
-    }
-
-    void OnDestroy()
-    {
-        action.performed -= OnAction;
-        action.Disable();
     }
 }

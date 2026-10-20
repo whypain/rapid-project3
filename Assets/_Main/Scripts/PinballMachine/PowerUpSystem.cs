@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PowerUpSystem : MonoBehaviour
+public class PowerUpSystem : MonoBehaviour, IResetable
 {
     public static PowerUpSystem Instance { get; private set; }
+
+    [Header("Drop Settings")] 
+    [SerializeField] private float dropInterval = 10f;
 
     [Header("Power-Up Drop Prefabs")]
     [SerializeField] private GameObject fireDropPrefab;
@@ -18,9 +21,6 @@ public class PowerUpSystem : MonoBehaviour
     [SerializeField] private GameObject fireExplosionPrefab;
 
     [Header("Phase 3 Spawn Area")]
-    [Min(0)]
-    public int dropCountInPhase3 = 6;
-
     public Vector2 spawnAreaMin = new Vector2(-7f, -4f);
     public Vector2 spawnAreaMax = new Vector2(7f, 4f);
 
@@ -29,7 +29,8 @@ public class PowerUpSystem : MonoBehaviour
     [SerializeField] private float powerUpDuration = 7f;
 
     private string storedPowerType = string.Empty;
-    private bool isBossPhase3Started;
+    private bool isActive;
+    private float nextDropTime;
     private int activeWindCount;
 
     public bool HasStoredPower => !string.IsNullOrEmpty(storedPowerType);
@@ -56,23 +57,33 @@ public class PowerUpSystem : MonoBehaviour
         {
             ActivateStoredPowerForAllBalls();
         }
-        if(Keyboard.current.aKey.wasPressedThisFrame)
+        // if(Keyboard.current.aKey.wasPressedThisFrame)
+        // {
+        //     OnBossPhase3Start();
+        // }
+
+        if (isActive)
         {
-            OnBossPhase3Start();
+            CheckDropInterval();
+        }
+    }
+
+    private void CheckDropInterval()
+    {
+        if (Time.time >= nextDropTime)
+        {
+            SpawnRandomPowerUp();
+            nextDropTime = Time.time + dropInterval;
         }
     }
 
     public void OnBossPhase3Start()
     {
-        if (isBossPhase3Started)
+        if (isActive)
             return;
 
-        isBossPhase3Started = true;
-
-        for (int i = 0; i < dropCountInPhase3; i++)
-        {
-            SpawnRandomPowerUp();
-        }
+        isActive = true;
+        nextDropTime = Time.time + dropInterval;
     }
 
     public void SpawnRandomPowerUp()
@@ -170,7 +181,7 @@ public class PowerUpSystem : MonoBehaviour
         if (!HasStoredPower)
             return;
 
-        Ball[] activeBalls = FindObjectsByType<Ball>(FindObjectsSortMode.None);
+        Ball[] activeBalls = FindObjectsByType<Ball>();
 
         if (activeBalls.Length == 0)
         {
@@ -274,6 +285,19 @@ public class PowerUpSystem : MonoBehaviour
             return;
 
         Instance = null;
+        activeWindCount = 0;
+
+        if (windBumper != null)
+            windBumper.Deactivate();
+
+        if (windBarrierObject != null)
+            windBarrierObject.SetActive(false);
+    }
+
+    public void Reset()
+    {
+        isActive = false;
+        storedPowerType = string.Empty;
         activeWindCount = 0;
 
         if (windBumper != null)
