@@ -170,7 +170,7 @@ public class PowerUpSystem : MonoBehaviour
         if (!HasStoredPower)
             return;
 
-        Ball[] activeBalls = FindObjectsByType<Ball>(FindObjectsSortMode.None);
+        Ball[] activeBalls = FindObjectsByType<Ball>();
 
         if (activeBalls.Length == 0)
         {
