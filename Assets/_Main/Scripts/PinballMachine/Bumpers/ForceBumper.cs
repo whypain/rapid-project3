@@ -17,7 +17,7 @@ public class ForceBumper : MonoBehaviour, ICollisionEffect
         isActive = false;
     }
 
-    public void OnHit(Ball ball, Collision2D collision)
+    public virtual void OnHit(Ball ball, Collision2D collision)
     {
         if (!isActive) return;
 

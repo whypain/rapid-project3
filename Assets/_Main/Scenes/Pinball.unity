@@ -308,9 +308,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 47738028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
+  m_Script: {fileID: 11500000, guid: ec84759b718265e48aebdc263a66520b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
+  m_EditorClassIdentifier: Assembly-CSharp::HandBumper
   forceMagnitude: 20
   bumperCollider: {fileID: 47738031}
 --- !u!1 &65177230
@@ -888,6 +888,7 @@ GameObject:
   m_Component:
   - component: {fileID: 241390879}
   - component: {fileID: 241390880}
+  - component: {fileID: 241390881}
   m_Layer: 0
   m_Name: Ranged
   m_TagString: Untagged
@@ -918,7 +919,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241390878}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -947,6 +948,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.98211265
+--- !u!114 &241390881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241390878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c77ddc51999e714ca2aec4b1580db57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageCollider
 --- !u!1 &247608883
 GameObject:
   m_ObjectHideFlags: 0
@@ -3173,6 +3186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1406389960}
   - component: {fileID: 1406389961}
+  - component: {fileID: 1406389962}
   m_Layer: 0
   m_Name: Sweep Attack
   m_TagString: Untagged
@@ -3203,7 +3217,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406389959}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -3232,6 +3246,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.55
+--- !u!114 &1406389962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406389959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c77ddc51999e714ca2aec4b1580db57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageCollider
 --- !u!1 &1442117483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3635,7 +3661,7 @@ GameObject:
   - component: {fileID: 1714608740}
   - component: {fileID: 1714608741}
   - component: {fileID: 1714608742}
-  - component: {fileID: 1714608743}
+  - component: {fileID: 1714608744}
   m_Layer: 0
   m_Name: HandRight
   m_TagString: Untagged
@@ -3768,7 +3794,7 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 1
---- !u!114 &1714608743
+--- !u!114 &1714608744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3777,9 +3803,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714608739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
+  m_Script: {fileID: 11500000, guid: ec84759b718265e48aebdc263a66520b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
+  m_EditorClassIdentifier: Assembly-CSharp::HandBumper
   forceMagnitude: 20
   bumperCollider: {fileID: 1714608742}
 --- !u!1 &1795948678
@@ -3834,7 +3860,7 @@ MonoBehaviour:
   handAnchor: {fileID: 1795948679}
   physMat: {fileID: 6200000, guid: 0e45240ab4df1544ab83f28f809f952b, type: 2}
   collider: {fileID: 1714608742}
-  bumper: {fileID: 1714608743}
+  bumper: {fileID: 1714608744}
 --- !u!1 &1851234453
 GameObject:
   m_ObjectHideFlags: 0
@@ -4395,6 +4421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1953227480}
   - component: {fileID: 1953227481}
+  - component: {fileID: 1953227482}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -4425,7 +4452,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953227479}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -4455,6 +4482,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0.08498869, y: 0}
   m_Size: {x: 3.010337, y: 7.104411}
   m_Direction: 0
+--- !u!114 &1953227482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953227479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c77ddc51999e714ca2aec4b1580db57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageCollider
 --- !u!1 &1954323873
 GameObject:
   m_ObjectHideFlags: 0
@@ -4592,6 +4631,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954323873}
   m_CullTransparentMesh: 1
+--- !u!1 &1996543445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1996543447}
+  - component: {fileID: 1996543448}
+  m_Layer: 0
+  m_Name: DamageSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1996543447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996543445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1996543448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996543445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84d7eebe908fac42a9f0317264a9025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageSystem
+  timeTilDestroy: 5
 --- !u!1 &2062737193
 GameObject:
   m_ObjectHideFlags: 0
@@ -4887,4 +4971,5 @@ SceneRoots:
   - {fileID: 179392378}
   - {fileID: 1513070019}
   - {fileID: 1493087344}
+  - {fileID: 1996543447}
   - {fileID: 1502975081}

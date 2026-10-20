@@ -126,6 +126,15 @@ public class Ball : MonoBehaviour
             collisionEffect.OnHit(this, collision);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out ITriggerEffect triggerEffect))
+        {
+            triggerEffect.OnHit(this);
+        }
+    }
+
     private void ClearPowerUps()
     {
         for (int i = activePowerUps.Count - 1; i >= 0; i--)
