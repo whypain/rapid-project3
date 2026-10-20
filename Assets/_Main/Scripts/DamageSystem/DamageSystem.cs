@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageSystem : MonoBehaviour
+public class DamageSystem : MonoBehaviour, IResetable
 {
     public static DamageSystem Instance { get; private set; }
 
@@ -71,5 +71,10 @@ public class DamageSystem : MonoBehaviour
             damagedBalls.Remove(ball);
             ball.ReleaseBall();
         }
+    }
+
+    public void Reset()
+    {
+        damagedBalls.Clear();
     }
 }

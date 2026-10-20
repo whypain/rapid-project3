@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PowerUpDrop : MonoBehaviour
+public class PowerUpDrop : MonoBehaviour, IResetable
 {
     private string powerTypeLabel = string.Empty;
     private SpriteRenderer spriteRenderer;
@@ -78,6 +78,11 @@ public class PowerUpDrop : MonoBehaviour
         isCollected = true;
         system.StoreCollectedPower(powerTypeLabel);
 
+        Destroy(gameObject);
+    }
+
+    public void Reset()
+    {
         Destroy(gameObject);
     }
 }

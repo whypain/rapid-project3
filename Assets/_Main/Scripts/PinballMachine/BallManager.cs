@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Pool;
 using TMPro;
 
 [DefaultExecutionOrder(-1)]
-public class BallManager : MonoBehaviour
+public class BallManager : MonoBehaviour, IResetable
 {
     public static BallManager Instance { get; private set; }
 
@@ -14,11 +13,9 @@ public class BallManager : MonoBehaviour
     [SerializeField] private int dupHitCount = 8;
     [SerializeField] private TextMeshProUGUI textDupHit;
     [Header("Input")]
-    [SerializeField] private InputActionReference actionRef;
 
     private int currHitCount;
     private List<Ball> activeBalls = new List<Ball>();
-    private InputAction action;
 
     private IObjectPool<Ball> ballPool;
 
@@ -35,11 +32,6 @@ public class BallManager : MonoBehaviour
 
     private void Start()
     {
-        action = actionRef.action;
-
-        action.Enable();
-        action.performed += OnAction;
-
         ballPool = new ObjectPool<Ball>(
             createFunc: () =>
             {
@@ -94,7 +86,7 @@ public class BallManager : MonoBehaviour
         newBall.AddForce(velocity);
     }
 
-    void OnAction(InputAction.CallbackContext _)
+    public void Reset()
     {
         foreach (var ball in activeBalls)
         {
@@ -129,16 +121,9 @@ public class BallManager : MonoBehaviour
             ballPool.Release(ball);
         }
     }
-    List<Ball> GetAllBall;
 
     private void UpdateUI()
     {
         textDupHit.text = $"{dupHitCount - currHitCount}";
-    }
-
-    void OnDestroy()
-    {
-        action.performed -= OnAction;
-        action.Disable();
     }
 }

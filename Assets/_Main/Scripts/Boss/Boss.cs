@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [DefaultExecutionOrder(-1)]
-public class Boss : MonoBehaviour, ICollisionEffect
+public class Boss : MonoBehaviour, ICollisionEffect, IResetable
 {
     public static Boss Instance { get; private set; }
     public BossPhase[] Phases => phases;
@@ -193,5 +193,17 @@ public class Boss : MonoBehaviour, ICollisionEffect
             attackTimer = attackInterval;
             FindSkillAndUse();
         }
+    }
+
+    public void Reset()
+    {
+        health = baseHealth;
+        currentPhase = 0;
+        phaseChangeTimer = 0;
+        attackTimer = 0;
+        usingSkill = null;
+
+        ChangePhase(0);
+        OnHealthChanged?.Invoke(health);
     }
 }

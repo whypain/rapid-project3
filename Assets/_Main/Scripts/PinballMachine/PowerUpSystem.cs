@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PowerUpSystem : MonoBehaviour
+public class PowerUpSystem : MonoBehaviour, IResetable
 {
     public static PowerUpSystem Instance { get; private set; }
 
@@ -285,6 +285,19 @@ public class PowerUpSystem : MonoBehaviour
             return;
 
         Instance = null;
+        activeWindCount = 0;
+
+        if (windBumper != null)
+            windBumper.Deactivate();
+
+        if (windBarrierObject != null)
+            windBarrierObject.SetActive(false);
+    }
+
+    public void Reset()
+    {
+        isActive = false;
+        storedPowerType = string.Empty;
         activeWindCount = 0;
 
         if (windBumper != null)

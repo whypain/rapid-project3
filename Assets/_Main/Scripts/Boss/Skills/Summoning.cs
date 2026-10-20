@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Summoning : MonoBehaviour
+public class Summoning : MonoBehaviour, IResetable
 {
     public bool IsActive => gameObject.activeSelf;
 
@@ -12,5 +12,10 @@ public class Summoning : MonoBehaviour
     public void Deactivate()
     {
         gameObject.SetActive(false);
+    }
+
+    public void Reset()
+    {
+        Deactivate();
     }
 }
