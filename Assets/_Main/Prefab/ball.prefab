@@ -171,3 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
   rb: {fileID: 8601537559340136992}
+  bumpMultiplier: 0.1
+  baseAttack: 1
+  baseBumpForce: 1
+  baseGravity: 1
+  activePowerUps: []

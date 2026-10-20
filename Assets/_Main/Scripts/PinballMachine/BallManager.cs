@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
+[DefaultExecutionOrder(-1)]
 public class BallManager : MonoBehaviour
 {
+    public static BallManager Instance { get; private set; }
+
     [SerializeField] private Transform ballParent;
     [SerializeField] private Ball ballPrefab;
     [SerializeField] private int dupHitCount = 8;
@@ -20,6 +21,17 @@ public class BallManager : MonoBehaviour
     private InputAction action;
 
     private IObjectPool<Ball> ballPool;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -72,6 +84,14 @@ public class BallManager : MonoBehaviour
 
         Ball newBall = ballPool.Get();
         newBall.ResetBall();
+    }
+
+    public void SpawnBallAt(Vector3 position, Vector2 velocity)
+    {
+        Ball newBall = ballPool.Get();
+        newBall.ResetBall();
+        newBall.transform.position = position;
+        newBall.AddForce(velocity);
     }
 
     void OnAction(InputAction.CallbackContext _)
