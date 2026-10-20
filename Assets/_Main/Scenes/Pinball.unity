@@ -3523,13 +3523,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9f0eee0c2a7f4439747237a844dfc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpSystem
+  dropInterval: 3
   fireDropPrefab: {fileID: 9143974501086400525, guid: ee05e01e7abc64e4aafce6dfec65426b, type: 3}
   electricDropPrefab: {fileID: 3633956621340874615, guid: ed07535b0c30a6643b0ac4a38ea130d2, type: 3}
   windDropPrefab: {fileID: 7449207297043688078, guid: 24c884f7161af0f40849c805ad93eee7, type: 3}
   windBarrierObject: {fileID: 1442117483}
   windBumper: {fileID: 1442117485}
   fireExplosionPrefab: {fileID: 3275169671843459464, guid: eea8912306f2e9b48b6e4db82585c445, type: 3}
-  dropCountInPhase3: 6
   spawnAreaMin: {x: -5, y: -7}
   spawnAreaMax: {x: 5, y: 7}
   powerUpDuration: 5
