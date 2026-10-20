@@ -59,13 +59,11 @@ public class BossHPBar : MonoBehaviour
         }
 
         float hpWidth = hpFill.rectTransform.rect.width;
-        Debug.Log($"width: {hpWidth}, health: {boss.BaseHealth}");
         for (int i = 0; i < phases.Length; i++)
         {
             BossPhase phase = phases[i];
             GameObject separator = Instantiate(separatorPrefab, separatorParent);
             separator.transform.localPosition = new Vector3(hpWidth * phase.healthThreshold / boss.BaseHealth, 0, 0);
-            Debug.Log($"Separator for phase {i} at position: {separator.transform.localPosition.x}");
         }
     }
 

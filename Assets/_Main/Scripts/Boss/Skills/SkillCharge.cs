@@ -16,7 +16,8 @@ public class SkillCharge : Skill
         await UniTask.Delay(TimeSpan.FromSeconds(chargeDuration), cancellationToken: cancelTokenSource.Token);
         if (cancelTokenSource.IsCancellationRequested) return;
 
-        nextSkill.Use().Forget();
+        Cancel();
+        await nextSkill.Use();
     }
 
     public override void Cancel()

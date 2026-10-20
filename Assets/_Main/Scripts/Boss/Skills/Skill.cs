@@ -9,6 +9,7 @@ public abstract class Skill : MonoBehaviour
 
     [SerializeField] private string skillName;
     [SerializeField] private float cooldown;
+    [SerializeField] private GameObject visual;
 
     protected Boss owner;
     private float lastUsedTime;
@@ -33,9 +34,16 @@ public abstract class Skill : MonoBehaviour
     public virtual async UniTask Use(Action callback = null)
     {
         lastUsedTime = Time.time;
+        if (visual != null) visual.SetActive(true);
+
         await OnUse();
+
+        if (visual != null) visual.SetActive(false);
         callback?.Invoke();
     }
 
-    public virtual void Cancel() { }
+    public virtual void Cancel()
+    {
+        visual?.SetActive(false);
+    }
 }

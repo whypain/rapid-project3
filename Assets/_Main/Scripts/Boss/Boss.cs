@@ -17,6 +17,7 @@ public class Boss : MonoBehaviour, ICollisionEffect
 
     [Header("Boss Settings")]
     [SerializeField] private float baseHealth = 100f;
+    [SerializeField] private float attackInterval = 100f;
     [SerializeField] private float delayOnPhaseChange = 1f;
     [SerializeField] private BossPhase[] phases;
 
@@ -28,6 +29,7 @@ public class Boss : MonoBehaviour, ICollisionEffect
     private int currentPhase;
     private float phaseChangeTimer;
     private float health;
+    private float attackTimer;
 
     private void Awake()
     {
@@ -126,6 +128,11 @@ public class Boss : MonoBehaviour, ICollisionEffect
             return;
         }
 
+        if (usingSkill != null)
+        {
+            usingSkill.Cancel();
+            usingSkill = null;
+        }
         UseSkill(openningSkill);
     }
 
@@ -134,6 +141,7 @@ public class Boss : MonoBehaviour, ICollisionEffect
         if (skill == null || usingSkill != null) return;
 
         usingSkill = skill;
+        attackTimer = attackInterval;
         usingSkill.Use(() => { usingSkill = null; }).Forget();
         OnSkillUsed?.Invoke(skill.Name);
     }
@@ -141,13 +149,14 @@ public class Boss : MonoBehaviour, ICollisionEffect
     private void FindSkillAndUse()
     {
         if (currentSkills == null || currentSkills.Length == 0) return;
-
-        Skill[] validSkills = Array.FindAll(currentSkills, skill => skill.CanUse());
-        if (validSkills.Length == 0)
+        if (usingSkill != null)
         {
-            Debug.LogWarning("No valid skills available to use.");
+            attackTimer = attackInterval;
             return;
         }
+
+        Skill[] validSkills = Array.FindAll(currentSkills, skill => skill.CanUse());
+        if (validSkills.Length == 0) return;
 
         Skill skillToUse = validSkills[UnityEngine.Random.Range(0, validSkills.Length)];
         UseSkill(skillToUse);
@@ -175,8 +184,13 @@ public class Boss : MonoBehaviour, ICollisionEffect
             return;
         }
 
-        if (usingSkill == null)
+        if (attackTimer > 0)
         {
+            attackTimer -= Time.deltaTime;
+        }
+        else
+        {
+            attackTimer = attackInterval;
             FindSkillAndUse();
         }
     }
