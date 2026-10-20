@@ -3,11 +3,16 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(-1)]
 public class Boss : MonoBehaviour, ICollisionEffect
 {
+    public static Boss Instance { get; private set; }
+    public BossPhase[] Phases => phases;
+    public float BaseHealth => baseHealth;
+
     public UnityEvent<string> OnSkillUsed;
     public UnityEvent<int> OnPhaseChanged;
-    public UnityEvent<float> OnTakeDamage;
+    public UnityEvent<float> OnHealthChanged;
     public UnityEvent OnDead;
 
     [Header("Boss Settings")]
@@ -26,6 +31,14 @@ public class Boss : MonoBehaviour, ICollisionEffect
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         health = baseHealth;
         currentPhase = 0;
     }
@@ -52,8 +65,8 @@ public class Boss : MonoBehaviour, ICollisionEffect
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        OnTakeDamage?.Invoke(damage);
+        health = Mathf.Max(0, health - damage);
+        OnHealthChanged?.Invoke(health);
         if (usingSkill != null && usingSkill.IsCancellable)
         {
             usingSkill.Cancel();
@@ -63,9 +76,7 @@ public class Boss : MonoBehaviour, ICollisionEffect
 
         if (health <= 0)
         {
-            health = 0;
             Die();
-
             return;
         }
 
