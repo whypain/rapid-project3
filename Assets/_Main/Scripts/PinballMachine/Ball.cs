@@ -106,6 +106,12 @@ public class Ball : MonoBehaviour
         {
             PowerUp powerUp = activePowerUps[i];
 
+            if (powerUp == null)
+            {
+                activePowerUps.RemoveAt(i);
+                continue;
+            }
+
             powerUp.Update(Time.deltaTime);
 
             if (powerUp.IsExpired())
@@ -115,11 +121,15 @@ public class Ball : MonoBehaviour
             }
         }
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         for (int i = activePowerUps.Count - 1; i >= 0; i--)
         {
-            activePowerUps[i].OnHit(this, collision);
+            PowerUp powerUp = activePowerUps[i];
+            
+            if (powerUp == null || powerUp.IsExpired()) continue;
+
+            powerUp.OnHit(this, collision);
         }
         if (collision.gameObject.TryGetComponent(out ICollisionEffect collisionEffect))
         {

@@ -63,17 +63,16 @@ public class PowerUpDrop : MonoBehaviour, IResetable
 
         if (system == null)
         {
-            Debug.LogWarning(
-                "Cannot collect Power-Up: PowerUpSystem is missing.");
+            Debug.LogWarning("Cannot collect Power-Up: PowerUpSystem is missing.");
             return;
         }
 
         if (string.IsNullOrEmpty(powerTypeLabel))
         {
-            Debug.LogWarning(
-                "PowerUpDrop has not been initialized.");
+            Debug.LogWarning("PowerUpDrop has not been initialized.");
             return;
         }
+        if (!system.StoreCollectedPower(powerTypeLabel)) return;
 
         isCollected = true;
         system.StoreCollectedPower(powerTypeLabel);
