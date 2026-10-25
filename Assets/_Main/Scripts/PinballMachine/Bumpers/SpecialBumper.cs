@@ -12,7 +12,7 @@ public class SpecialBumper : MonoBehaviour, ICollisionEffect
         if (BallManager.Instance == null) return;
 
         BallManager ballManager = BallManager.Instance;
-        int ballsToDupe = ball.BumperHitCount / hitsToDupe;
+        int ballsToDupe = Mathf.Min(2, ball.BumperHitCount / hitsToDupe);
 
         if (ballsToDupe <= 1) return;
 

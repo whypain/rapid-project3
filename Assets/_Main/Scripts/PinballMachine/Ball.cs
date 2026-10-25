@@ -80,6 +80,7 @@ public class Ball : MonoBehaviour
     {
         // ballManager?.IncrementHitCount();
 
+        Debug.Log("HIt");
         bumperHitCount++;
         UpdateStats();
     }

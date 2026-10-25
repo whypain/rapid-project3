@@ -1,11 +1,14 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class SkillSummon : Skill
+public class SkillSummon : Skill, IResetable
 {
     [SerializeField] private float summonDelay = 0.5f;
     [SerializeField] private Summoning[] summons;
+
+    CancellationTokenSource summonCts;
 
     public override bool CanUse()
     {
@@ -21,16 +24,27 @@ public class SkillSummon : Skill
         return base.CanUse() && !allSummonsActive;
     }
 
+    public void Reset()
+    {
+        summonCts?.Cancel();
+        summonCts = null;
+    }
+
     protected override async UniTask OnUse()
     {
         if (summons.Length == 0) return;
 
+        summonCts?.Cancel();
+        summonCts = new CancellationTokenSource();
+
         for (int i = 0; i < summons.Length; i++)
         {
+            if (summonCts.IsCancellationRequested) break;
+
             if (summons[i] == null || summons[i].IsActive) continue;
 
             summons[i].Activate();
-            await UniTask.Delay(TimeSpan.FromSeconds(summonDelay));
+            await UniTask.Delay(TimeSpan.FromSeconds(summonDelay), cancellationToken: summonCts.Token);
         }
         await UniTask.Yield();
     }

@@ -23,7 +23,7 @@ public class PowerUp
     }
     public virtual void OnHit(Ball ball, Collision2D collision)
     {
-        ball.OnHit();
+        // ball.OnHit();
     }
     public bool IsExpired()
     {

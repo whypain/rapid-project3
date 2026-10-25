@@ -5,7 +5,7 @@ public class ForceBumper : MonoBehaviour, ICollisionEffect
     [SerializeField] private float forceMagnitude = 10f;
     [SerializeField] private Collider2D bumperCollider;
 
-    private bool isActive;
+    [SerializeField] private bool isActive;
 
     public void Activate()
     {

@@ -20,6 +20,6 @@ public class Fire : PowerUp
         {
             Object.Instantiate(explosionEffectPrefab, ball.transform.position, Quaternion.identity);
         }
-        Object.Destroy(collision.gameObject);
+        collision.gameObject.SetActive(false);
     }
 }

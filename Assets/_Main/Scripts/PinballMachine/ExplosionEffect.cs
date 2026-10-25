@@ -17,10 +17,10 @@ public class ExplosionEffect : MonoBehaviour
             if (hit == null)
                 continue;
 
-            if (hit.CompareTag("Bumper"))
-            {
-                Destroy(hit.gameObject);
-            }
+            // if (hit.CompareTag("Bumper"))
+            // {
+                // Destroy(hit.gameObject);
+            // }
         }
 
         Destroy(gameObject, lifetime);

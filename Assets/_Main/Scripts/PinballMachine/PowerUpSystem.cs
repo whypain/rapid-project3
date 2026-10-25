@@ -304,4 +304,15 @@ public class PowerUpSystem : MonoBehaviour, IResetable
         if (windBarrierObject != null)
             windBarrierObject.SetActive(false);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Vector2 min = Vector2.Min(spawnAreaMin, spawnAreaMax);
+        Vector2 max = Vector2.Max(spawnAreaMin, spawnAreaMax);
+        Vector2 size = max - min;
+        Vector2 center = (min + max) / 2f;
+
+        Gizmos.DrawWireCube(center, size);
+    }
 }
