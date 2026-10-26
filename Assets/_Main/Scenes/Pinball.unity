@@ -324,6 +324,11 @@ MonoBehaviour:
     onPhaseStart:
       m_PersistentCalls:
         m_Calls: []
+  bossHit: {fileID: 11400000, guid: 074a83fa4e7398d4bac2083942883522, type: 2}
+  bossHurt: {fileID: 11400000, guid: 7cfcb17f96d2f4d49b49ca23db7fc2c9, type: 2}
+  bossDie: {fileID: 11400000, guid: 050d31517668fcd4daee706493ee4041, type: 2}
+  bossPhase0: {fileID: 11400000, guid: 4fe8ac790e23ae749b9f9e3e19eb3e52, type: 2}
+  bossPhase1: {fileID: 11400000, guid: 96be0c2816d37f741bb1b9d2c70a9671, type: 2}
   damageDebug: 0
 --- !u!61 &113804628
 BoxCollider2D:
@@ -916,6 +921,8 @@ MonoBehaviour:
   skillName: ranged
   cooldown: 5
   visual: {fileID: 302581585}
+  skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
+  delaySound: 0
   collider: {fileID: 1678327327}
   sweepDuration: 1
 --- !u!1 &384879804
@@ -1016,6 +1023,8 @@ MonoBehaviour:
   skillName: charge
   cooldown: 15
   visual: {fileID: 598391709}
+  skillSound: {fileID: 0}
+  delaySound: 0
   chargeDuration: 3
   nextSkill: {fileID: 1821047032}
 --- !u!1 &423344860
@@ -1066,6 +1075,8 @@ MonoBehaviour:
   skillName: sweep
   cooldown: 5
   visual: {fileID: 0}
+  skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
+  delaySound: 0
   collider: {fileID: 879726124}
   sweepDuration: 0.5
 --- !u!1 &472524683
@@ -1784,6 +1795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478e89e45ce633439f119cb28de9ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  bumperHit: {fileID: 11400000, guid: 0a7a275dc1577604fb082b3cbb6a8fac, type: 2}
+  bumperDestroyed: {fileID: 11400000, guid: 3804e4dadfd57eb43bd3e5af61d0f727, type: 2}
 --- !u!58 &712440756
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3232,6 +3245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478e89e45ce633439f119cb28de9ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  bumperHit: {fileID: 11400000, guid: 0a7a275dc1577604fb082b3cbb6a8fac, type: 2}
+  bumperDestroyed: {fileID: 11400000, guid: 3804e4dadfd57eb43bd3e5af61d0f727, type: 2}
 --- !u!58 &1093693531
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4364,6 +4379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478e89e45ce633439f119cb28de9ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  bumperHit: {fileID: 11400000, guid: 0a7a275dc1577604fb082b3cbb6a8fac, type: 2}
+  bumperDestroyed: {fileID: 11400000, guid: 3804e4dadfd57eb43bd3e5af61d0f727, type: 2}
 --- !u!58 &1582976731
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4521,6 +4538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0478e89e45ce633439f119cb28de9ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  bumperHit: {fileID: 11400000, guid: 0a7a275dc1577604fb082b3cbb6a8fac, type: 2}
+  bumperDestroyed: {fileID: 11400000, guid: 3804e4dadfd57eb43bd3e5af61d0f727, type: 2}
 --- !u!58 &1657400192
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4953,8 +4972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2011e707e9bf32429dbc2f166902edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpecialBumper
+  bumperHit: {fileID: 11400000, guid: 0a7a275dc1577604fb082b3cbb6a8fac, type: 2}
+  bumperDestroyed: {fileID: 11400000, guid: 3804e4dadfd57eb43bd3e5af61d0f727, type: 2}
   spread: 60
   hitsToDupe: 3
+  ballDupe: {fileID: 11400000, guid: d85870bbb7144074c8128c6e94d300a1, type: 2}
 --- !u!58 &1716259126
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5371,6 +5393,8 @@ MonoBehaviour:
   skillName: laser
   cooldown: 0
   visual: {fileID: 1876624015}
+  skillSound: {fileID: 11400000, guid: 33b3f0be1e5e41e4481ef016fd46028f, type: 2}
+  delaySound: 0
   collider: {fileID: 21071239}
   sweepDuration: 5
 --- !u!1001 &1825217029
@@ -5831,6 +5855,8 @@ MonoBehaviour:
   skillName: summon
   cooldown: 5
   visual: {fileID: 0}
+  skillSound: {fileID: 0}
+  delaySound: 0
   summonDelay: 0.5
   summons:
   - {fileID: 712440754}
@@ -5838,6 +5864,7 @@ MonoBehaviour:
   - {fileID: 1582976729}
   - {fileID: 1093693529}
   - {fileID: 1716259127}
+  summonSound: {fileID: 11400000, guid: 68bfd338a5e597645bd3c0d2f388722c, type: 2}
 --- !u!1 &1879820644
 GameObject:
   m_ObjectHideFlags: 0

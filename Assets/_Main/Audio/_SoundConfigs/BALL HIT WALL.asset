@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
   clip: {fileID: 8300000, guid: 618eb9987d400bc4d8b04938043d3f58, type: 3}
   mixerGroup: {fileID: 204904033764839516, guid: 948cf8c2f6fab4444b4bd9ab5c87ad71, type: 2}
-  volume: 0.5
-  randomPitchRange: {x: 1, y: 1}
+  volume: 0.095
+  randomPitchRange: {x: 0.9, y: 1.1}

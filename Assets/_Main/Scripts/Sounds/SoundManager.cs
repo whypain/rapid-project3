@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using PrimeTween;
 using UnityEngine;
@@ -89,6 +90,13 @@ public class SoundManager : MonoBehaviour
     public void PlaySoundFromPool(SoundConfig config, Vector3 position = default)
     {
         if (config == null || config.clip == null) return;
+        PlaySoundFromPool(config.clip, config.randomPitchRange, config.mixerGroup, position, config.volume);
+    }
+
+    public async UniTask PlayDelayedSoundFromPool(SoundConfig config, float delay, Vector3 position = default)
+    {
+        if (config == null || config.clip == null) return;
+        await UniTask.Delay(TimeSpan.FromSeconds(delay));
         PlaySoundFromPool(config.clip, config.randomPitchRange, config.mixerGroup, position, config.volume);
     }
 

@@ -469,6 +469,7 @@ MonoBehaviour:
   electricColor: {r: 0.38823533, g: 0, b: 1, a: 1}
   windColor: {r: 0.6431373, g: 0.90196085, b: 0.26666668, a: 1}
   colorMixMode: 2
+  ballHitWall: {fileID: 11400000, guid: 0f0821bb96a00354580fc4f6a9891f9c, type: 2}
 --- !u!1 &8203298933563949056
 GameObject:
   m_ObjectHideFlags: 0

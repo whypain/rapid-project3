@@ -21,6 +21,13 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     [SerializeField] private float delayOnPhaseChange = 1f;
     [SerializeField] private BossPhase[] phases;
 
+    [Header("Sound References")]
+    [SerializeField] private SoundConfig bossHit;
+    [SerializeField] private SoundConfig bossHurt;
+    [SerializeField] private SoundConfig bossDie;
+    [SerializeField] private SoundConfig bossPhase0;
+    [SerializeField] private SoundConfig bossPhase1;
+
     [Header("Debug")]
     [SerializeField] private float damageDebug;
 
@@ -40,9 +47,13 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         }
 
         Instance = this;
+        // health = baseHealth;
+        // currentPhase = 0;
+    }
 
-        health = baseHealth;
-        currentPhase = 0;
+    private void Start()
+    {
+        Reset();
     }
 
     [ContextMenu("Debug Take Damage")]
@@ -63,6 +74,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     public void OnHit(Ball ball, Collision2D collision)
     {
         TakeDamage(ball.Attack);
+        SoundManager.Instance.PlaySoundFromPool(bossHit);
     }
 
     public void TakeDamage(float damage)
@@ -82,6 +94,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
             return;
         }
 
+        SoundManager.Instance.PlaySoundFromPool(bossHurt);
         CheckPhaseChange();
     } 
 
@@ -103,6 +116,8 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     private void ChangePhase(int phase)
     {
         Debug.Log($"Phase changed to {phase}");
+        if (phase == 0) SoundManager.Instance.PlayMusic(bossPhase0);
+        else if (phase == 1) SoundManager.Instance.PlayMusic(bossPhase1);
 
         currentPhase = phase;
         phaseChangeTimer = delayOnPhaseChange;
@@ -167,6 +182,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         // Handle boss death logic here
         Debug.Log("Boss defeated!");
         OnDead?.Invoke();
+        SoundManager.Instance.PlaySoundFromPool(bossDie);
     }
 
     private void Update()

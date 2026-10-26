@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class SoundHelper
 {
-    [MenuItem("Assets/Create/Sound Config From Folder")]
-    public static void CreateSoundConfigFromFolder()
+    [MenuItem("Assets/Create/Sound Config From Selected")]
+    public static void CreateSoundConfigFromSelected()
     {
         List<string> ListAudioClips(string folderPath)
         {

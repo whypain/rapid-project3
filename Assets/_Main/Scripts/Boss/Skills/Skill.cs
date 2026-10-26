@@ -11,6 +11,9 @@ public abstract class Skill : MonoBehaviour
     [SerializeField] private float cooldown;
     [SerializeField] private GameObject visual;
 
+    [SerializeField] private SoundConfig skillSound;
+    [SerializeField] private float delaySound;
+
     protected Boss owner;
     private float lastUsedTime;
 
@@ -35,6 +38,10 @@ public abstract class Skill : MonoBehaviour
     {
         lastUsedTime = Time.time;
         if (visual != null) visual.SetActive(true);
+        if (skillSound != null)
+        {
+            await SoundManager.Instance.PlayDelayedSoundFromPool(skillSound, delaySound);
+        }
 
         await OnUse();
 

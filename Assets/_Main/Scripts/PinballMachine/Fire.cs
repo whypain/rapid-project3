@@ -22,6 +22,9 @@ public class Fire : PowerUp
         {
             Object.Instantiate(explosionEffectPrefab, ball.transform.position, Quaternion.identity);
         }
-        collision.gameObject.SetActive(false);
+        if (collision.gameObject.TryGetComponent(out Bumper bumper))
+        {
+            bumper.Deactivate();
+        }
     }
 }

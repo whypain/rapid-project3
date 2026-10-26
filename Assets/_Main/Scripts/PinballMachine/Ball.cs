@@ -60,6 +60,9 @@ public class Ball : MonoBehaviour
     [SerializeField] private Color windColor = Color.green;
     [SerializeField] private ColorMixer.Mode colorMixMode = ColorMixer.Mode.Average;
 
+    [Header("Sound")]
+    [SerializeField] private SoundConfig ballHitWall;
+
     private static List<PowerUp> activePowerUps = new List<PowerUp>();
 
     private BallManager ballManager;
@@ -216,6 +219,11 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out ICollisionEffect collisionEffect))
         {
             collisionEffect.OnHit(this, collision);
+        }
+        else
+        {
+            // If the ball hits a wall or any other object without a collision effect, play the wall hit sound
+            SoundManager.Instance.PlaySoundFromPool(ballHitWall);
         }
     }
 
