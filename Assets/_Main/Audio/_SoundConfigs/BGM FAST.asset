@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6d4c2a939567d418a1d8d46288d001, type: 3}
+  m_Name: BGM FAST
+  m_EditorClassIdentifier: Assembly-CSharp::SoundConfig
+  clip: {fileID: 8300000, guid: f5484656116a64b4193dfa7a21e69c1a, type: 3}
+  mixerGroup: {fileID: -4303525313736824648, guid: 948cf8c2f6fab4444b4bd9ab5c87ad71, type: 2}
+  volume: 0.5
+  randomPitchRange: {x: 1, y: 1}
