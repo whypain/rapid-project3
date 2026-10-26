@@ -57,12 +57,27 @@ public class BallManager : MonoBehaviour, IResetable
             maxSize: 20
         );
 
-        SpawnBall();
-        UpdateUI();
+        // SpawnBall();
+        // UpdateUI();
+    }
+
+    private void OnEnable()
+    {
+        GameState.OnGameStarted += Reset;
+    }
+
+    private void OnDisable()
+    {
+        GameState.OnGameStarted -= Reset;
     }
 
     void SpawnBall()
     {
+        if (ballPool == null)
+        {
+            Debug.LogError("Ball pool is not initialized.");
+            return;
+        }
         if (ballPrefab == null)
         {
             Debug.LogError("Ball prefab reference is missing.");
@@ -119,6 +134,11 @@ public class BallManager : MonoBehaviour, IResetable
         {
             activeBalls.Remove(ball);
             ballPool.Release(ball);
+        }
+
+        if (activeBalls.Count == 0)
+        {
+            GameState.Instance.SetGameOver();
         }
     }
 
