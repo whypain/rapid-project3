@@ -6,11 +6,13 @@ public class Wind : PowerUp
 
     public Wind(
         PowerUpSystem system,
-        Ball targetBall,
         float durationSeconds)
-        : base(system, targetBall, durationSeconds)
+        : base(system, durationSeconds)
     {
     }
+
+    public override string Name => "wind";
+
     public void ActivateWindBarrier(GameObject barrier)
     {
         if (isActive || powerUpSystem == null)

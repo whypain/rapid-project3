@@ -193,55 +193,47 @@ public class PowerUpSystem : MonoBehaviour, IResetable
         }
 
         string typeToActivate = inventory[index];
-        int activatedCount = 0;
+
+        PowerUp powerUp = CreatePowerUp(typeToActivate);
+        if (powerUp == null)
+        {
+            Debug.LogWarning($"Failed to create Power-Up of type: {typeToActivate}");
+            return;
+        }
+        if (powerUp is Wind windPower)
+        {
+            windPower.ActivateWindBarrier(windBarrierObject);
+        }
+
+        Ball.ApplyPowerUp(powerUp);
 
         foreach (Ball ball in activeBalls)
         {
-            if (ball == null)
-                continue;
-
-            PowerUp powerUp = CreatePowerUp(typeToActivate, ball);
-
-            if (powerUp == null)
-                continue;
-
-            ball.ApplyPowerUp(powerUp);
-
-            if (powerUp is Wind windPower)
-                windPower.ActivateWindBarrier(windBarrierObject);
-
-            activatedCount++;
+            if (ball != null)
+                ball.UpdateParticleColor();
         }
 
-        if (activatedCount > 0)
-        {
-            inventory.RemoveAt(index);
-
-            Debug.Log($"[ACTIVATED] {typeToActivate} applied to " + $"{activatedCount} ball(s).");
-        }
+        inventory.RemoveAt(index);
     }
 
-    private PowerUp CreatePowerUp(string typeLabel,Ball targetBall)
+    private PowerUp CreatePowerUp(string typeLabel)
     {
         switch (typeLabel)
         {
             case "Fire":
                 return new Fire(
                     this,
-                    targetBall,
                     powerUpDuration,
                     fireExplosionPrefab);
 
             case "Electric":
                 return new Electric(
                     this,
-                    targetBall,
                     powerUpDuration);
 
             case "Wind":
                 return new Wind(
                     this,
-                    targetBall,
                     powerUpDuration);
 
             default:

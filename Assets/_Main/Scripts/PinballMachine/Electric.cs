@@ -5,11 +5,13 @@ public class Electric : PowerUp
     [SerializeField] private float minimumSpeed = 8f;
     public Electric(
         PowerUpSystem system,
-        Ball targetBall,
         float durationSeconds)
-        : base(system, targetBall, durationSeconds)
+        : base(system, durationSeconds)
     {
     }
+
+    public override string Name => "electric";
+
     public override void OnHit(Ball ball, Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Bumper")) return;

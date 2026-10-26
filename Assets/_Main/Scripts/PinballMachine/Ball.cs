@@ -1,10 +1,52 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public static class ColorMixer
+{
+    public enum Mode
+    {
+        Additive,
+        Subtractive,
+        Average
+    }
+
+    public static Color MixColors(Color color1, Color color2, Mode mode)
+    {
+        switch (mode)
+        {
+            case Mode.Additive:
+                return new Color(
+                    Mathf.Clamp01(color1.r + color2.r),
+                    Mathf.Clamp01(color1.g + color2.g),
+                    Mathf.Clamp01(color1.b + color2.b),
+                    Mathf.Clamp01(color1.a + color2.a)
+                );
+            case Mode.Subtractive:
+                return new Color(
+                    Mathf.Clamp01(color1.r - color2.r),
+                    Mathf.Clamp01(color1.g - color2.g),
+                    Mathf.Clamp01(color1.b - color2.b),
+                    Mathf.Clamp01(color1.a - color2.a)
+                );
+            case Mode.Average:
+                return new Color(
+                    (color1.r + color2.r) / 2f,
+                    (color1.g + color2.g) / 2f,
+                    (color1.b + color2.b) / 2f,
+                    (color1.a + color2.a) / 2f
+                );
+            default:
+                return Color.black;
+        }
+    }
+}
 
 public class Ball : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private ParticleSystem particle;
 
     [Header("Settings")]
     [SerializeField] private float bumpMultiplier = 1.2f;
@@ -12,7 +54,13 @@ public class Ball : MonoBehaviour
     [SerializeField] private float baseBumpForce = 1f;
     [SerializeField] private float baseGravity = 1f;
 
-    [SerializeField] private List<PowerUp> activePowerUps = new List<PowerUp>();
+    [Header("Color")]
+    [SerializeField] private Color fireColor = Color.darkRed;
+    [SerializeField] private Color electricColor = Color.purple;
+    [SerializeField] private Color windColor = Color.green;
+    [SerializeField] private ColorMixer.Mode colorMixMode = ColorMixer.Mode.Average;
+
+    private static List<PowerUp> activePowerUps = new List<PowerUp>();
 
     private BallManager ballManager;
     private int bumperHitCount;
@@ -40,6 +88,7 @@ public class Ball : MonoBehaviour
         bumperHitCount = 0;
         activePowerUps.Clear();
         UpdateStats();
+        UpdateParticleColor();
     }
 
     public void ResetBall()
@@ -63,24 +112,19 @@ public class Ball : MonoBehaviour
     {
         ballManager.ReleaseBall(this);
     }
-    public void ApplyPowerUp(PowerUp powerUp)
+
+    public static void ApplyPowerUp(PowerUp powerUp)
     {
         if (powerUp != null)
         {
             activePowerUps.Add(powerUp);
-            Debug.Log($"Ball received {powerUp.GetType().Name}");
         }
-    }
-    public List<PowerUp> GetPowerUp()
-    {
-        return activePowerUps;
     }
 
     public void OnHit()
     {
         // ballManager?.IncrementHitCount();
 
-        Debug.Log("HIt");
         bumperHitCount++;
         UpdateStats();
     }
@@ -89,6 +133,41 @@ public class Ball : MonoBehaviour
     {
         bumperHitCount = 0;
         UpdateStats();
+    }
+
+    public void UpdateParticleColor()
+    {
+        if (particle == null) return;
+
+        var main = particle.main;
+
+        if (activePowerUps.Count == 0)
+        {
+            main.startColor = Color.white;
+            particle.Stop();
+            Debug.Log($"[POWER-UP] No active power-ups. Color reset to white.");
+            return;
+        }
+
+        var currentColor = main.startColor.color;
+
+        foreach (var powerUp in activePowerUps)
+        {
+            var powerUpColor = powerUp.Name switch
+            {
+                "fire" => fireColor,
+                "electric" => electricColor,
+                "wind" => windColor,
+                _ => Color.white
+            };
+
+            currentColor = ColorMixer.MixColors(currentColor, powerUpColor, colorMixMode);
+        }
+
+        main.startColor = currentColor;
+        particle.Play();
+
+        Debug.Log($"[POWER-UP] {string.Join(", ", activePowerUps.Select(p => p.Name))} | Color: {particle.main.startColor.color}");
     }
 
     void UpdateStats()
@@ -110,6 +189,7 @@ public class Ball : MonoBehaviour
             if (powerUp == null)
             {
                 activePowerUps.RemoveAt(i);
+                UpdateParticleColor();
                 continue;
             }
 
@@ -119,6 +199,7 @@ public class Ball : MonoBehaviour
             {
                 powerUp.OnExpire();
                 activePowerUps.RemoveAt(i);
+                UpdateParticleColor();
             }
         }
     }
@@ -154,6 +235,7 @@ public class Ball : MonoBehaviour
         }
 
         activePowerUps.Clear();
+        UpdateParticleColor();
     }
 
     private void OnDestroy()
