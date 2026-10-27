@@ -19,7 +19,6 @@ public class PowerUpSystem : MonoBehaviour, IResetable
     [SerializeField] private GameObject windDropPrefab;
 
     [Header("Wind References")]
-    [SerializeField] private GameObject windBarrierObject;
     [SerializeField] private ForceBumper windBumper;
 
     [Header("Fire References")]
@@ -43,7 +42,6 @@ public class PowerUpSystem : MonoBehaviour, IResetable
 
     private bool isActive;
     private float nextDropTime;
-    private int activeWindCount;
 
     private void Awake()
     {
@@ -54,9 +52,6 @@ public class PowerUpSystem : MonoBehaviour, IResetable
         }
 
         Instance = this;
-
-        if (windBarrierObject != null)
-            windBarrierObject.SetActive(false);
     }
 
     private void Update()
@@ -248,7 +243,7 @@ public class PowerUpSystem : MonoBehaviour, IResetable
         }
         if (powerUp is Wind windPower)
         {
-            windPower.ActivateWindBarrier(windBarrierObject);
+            windPower.ActivateWindBarrier();
         }
 
         // Ball.ApplyPowerUp(powerUp);
@@ -290,29 +285,19 @@ public class PowerUpSystem : MonoBehaviour, IResetable
 
     public void AcquireWindBarrier()
     {
-        activeWindCount++;
-
-        if (activeWindCount == 1)
+        if (windBumper != null)
         {
-            if (windBarrierObject != null)
-                windBarrierObject.SetActive(true);
-
-            if (windBumper != null)
-                windBumper.Activate();
+            windBumper.gameObject.SetActive(true);
+            windBumper.Activate();
         }
     }
 
     public void ReleaseWindBarrier()
     {
-        activeWindCount = Mathf.Max(0, activeWindCount - 1);
-
-        if (activeWindCount == 0)
+        if (windBumper != null)
         {
-            if (windBumper != null)
-                windBumper.Deactivate();
-
-            if (windBarrierObject != null)
-                windBarrierObject.SetActive(false);
+            windBumper.gameObject.SetActive(false);
+            windBumper.Deactivate();
         }
     }
 
@@ -322,26 +307,16 @@ public class PowerUpSystem : MonoBehaviour, IResetable
             return;
 
         Instance = null;
-        activeWindCount = 0;
 
-        if (windBumper != null)
-            windBumper.Deactivate();
-
-        if (windBarrierObject != null)
-            windBarrierObject.SetActive(false);
+        ReleaseWindBarrier();
     }
 
     public void Reset()
     {
         isActive = false;
         inventory.Clear();
-        activeWindCount = 0;
 
-        if (windBumper != null)
-            windBumper.Deactivate();
-
-        if (windBarrierObject != null)
-            windBarrierObject.SetActive(false);
+        ReleaseWindBarrier();
 
         activePowerUps.Clear();
         OnPowerUpChanged?.Invoke();

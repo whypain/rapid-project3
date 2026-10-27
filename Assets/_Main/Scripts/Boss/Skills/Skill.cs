@@ -51,7 +51,7 @@ public abstract class Skill : MonoBehaviour
 
     public virtual void Cancel()
     {
-        visual?.SetActive(false);
+        if (visual != null) visual.SetActive(false);
     }
 
     protected void Done()

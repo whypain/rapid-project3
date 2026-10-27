@@ -13,7 +13,7 @@ public class Wind : PowerUp
 
     public override string Name => "wind";
 
-    public void ActivateWindBarrier(GameObject barrier)
+    public void ActivateWindBarrier()
     {
         if (isActive || powerUpSystem == null)
             return;

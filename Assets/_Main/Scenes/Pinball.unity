@@ -3270,8 +3270,8 @@ Transform:
   m_GameObject: {fileID: 897252051}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.022, y: -4.43, z: 0}
-  m_LocalScale: {x: 1.6126, y: 0.2188, z: 1}
+  m_LocalPosition: {x: 0.022, y: -4.859, z: 0}
+  m_LocalScale: {x: 1.8388478, y: 0.8497098, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1053805547}
@@ -3321,7 +3321,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -5076,7 +5076,6 @@ MonoBehaviour:
   fireDropPrefab: {fileID: 9143974501086400525, guid: ee05e01e7abc64e4aafce6dfec65426b, type: 3}
   electricDropPrefab: {fileID: 3633956621340874615, guid: ed07535b0c30a6643b0ac4a38ea130d2, type: 3}
   windDropPrefab: {fileID: 7449207297043688078, guid: 24c884f7161af0f40849c805ad93eee7, type: 3}
-  windBarrierObject: {fileID: 897252051}
   windBumper: {fileID: 897252053}
   fireExplosionPrefab: {fileID: 3275169671843459464, guid: eea8912306f2e9b48b6e4db82585c445, type: 3}
   spawnAreaMin: {x: -3.67, y: -3.37}
