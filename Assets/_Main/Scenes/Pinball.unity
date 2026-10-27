@@ -5162,7 +5162,7 @@ MonoBehaviour:
   electricDropPrefab: {fileID: 3633956621340874615, guid: ed07535b0c30a6643b0ac4a38ea130d2, type: 3}
   windDropPrefab: {fileID: 7449207297043688078, guid: 24c884f7161af0f40849c805ad93eee7, type: 3}
   windBumper: {fileID: 897252053}
-  fireExplosionPrefab: {fileID: 3275169671843459464, guid: eea8912306f2e9b48b6e4db82585c445, type: 3}
+  fireExplosionPrefab: {fileID: 0}
   spawnAreaMin: {x: -3.67, y: -3.37}
   spawnAreaMax: {x: 3.59, y: 2.94}
   powerUpDuration: 10
