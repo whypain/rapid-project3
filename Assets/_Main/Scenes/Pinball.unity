@@ -3288,7 +3288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
-  forceMagnitude: 20
+  forceMagnitude: 5
   bumperCollider: {fileID: 897252054}
   isActive: 1
 --- !u!61 &897252054
