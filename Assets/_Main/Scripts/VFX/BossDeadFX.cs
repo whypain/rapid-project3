@@ -42,5 +42,7 @@ public class BossDeadFX : MonoBehaviour, IResetable
     {
         cts?.Cancel();
         cts = new CancellationTokenSource();
+
+        DisableAllExplosions();
     }
 }

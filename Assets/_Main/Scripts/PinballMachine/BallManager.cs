@@ -137,9 +137,9 @@ public class BallManager : MonoBehaviour, IResetable
             ballPool.Release(ball);
         }
 
-        if (activeBalls.Count == 0)
+        if (activeBalls.Count == 0 && Boss.Instance.isAlive)
         {
-            GameState.Instance.SetGameOver();
+            GameState.Instance.SetGameOver("No Balls?");
         }
     }
 

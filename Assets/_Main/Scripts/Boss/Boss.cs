@@ -40,7 +40,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     private float health;
     private float attackTimer;
 
-    private bool isAlive => health > 0;
+    public bool isAlive => health > 0;
 
     private void Awake()
     {
@@ -202,7 +202,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         SoundManager.Instance.PlaySoundFromPool(bossDie);
 
         await VFXSystem.Instance.PlayVFX(VFXType.BossExplosion, transform.position);
-        GameState.Instance.SetGameOver();
+        GameState.Instance.SetGameOver("You Win!");
     }
 
     private void Update()

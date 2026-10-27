@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
@@ -10,6 +11,7 @@ public class GameState : MonoBehaviour
 
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject gameMenuUI;
+    [SerializeField] private TMP_Text gameOverTitleText;
 
     [SerializeField] private SoundConfig menuBgm;
     [SerializeField] private SoundConfig gameBgm;
@@ -30,11 +32,12 @@ public class GameState : MonoBehaviour
         SetGameMenu();
     }
 
-    public void SetGameOver()
+    public void SetGameOver(string title)
     {
         Time.timeScale = 0f;
         gameOverUI.SetActive(true);
         gameMenuUI.SetActive(false);
+        gameOverTitleText.text = title;
     }
 
     public void SetGameMenu()
