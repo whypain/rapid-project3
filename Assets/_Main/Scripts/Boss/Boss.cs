@@ -95,6 +95,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         OnHealthChanged?.Invoke(health, damage);
         if (usingSkill != null && usingSkill.IsCancellable)
         {
+            SkillCancelled(usingSkill);
             usingSkill.Cancel();
             usingSkill = null;
         }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,8 @@ public class ResetManager : MonoBehaviour
 
     private void Start()
     {
+        if (actionRef == null) return;
+
         action = actionRef.action;
 
         action.Enable();
@@ -50,6 +53,7 @@ public class ResetManager : MonoBehaviour
 
     void OnDestroy()
     {
+        if (action == null) return;
         action.performed -= OnReset;
         action.Disable();
     }
