@@ -43,6 +43,7 @@ public class BallManager : MonoBehaviour, IResetable
             {
                 ball.gameObject.SetActive(true);
                 activeBalls.Add(ball);
+                ball.UpdateParticleColor();
             },
             actionOnRelease: (ball) =>
             {

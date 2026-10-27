@@ -481,13 +481,14 @@ GameObject:
   - component: {fileID: 8635656141551185653}
   - component: {fileID: 129073066187977980}
   - component: {fileID: 2578233753432938747}
+  - component: {fileID: 560747629375255878}
   m_Layer: 0
   m_Name: PowerupParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8635656141551185653
 Transform:
   m_ObjectHideFlags: 0
@@ -5306,3 +5307,15 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &560747629375255878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8203298933563949056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e62e1e204dad04ab9b3abde0fd3211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActiveMonitor

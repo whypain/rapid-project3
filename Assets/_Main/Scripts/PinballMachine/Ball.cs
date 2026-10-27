@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -63,8 +62,6 @@ public class Ball : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private SoundConfig ballHitWall;
 
-    private static List<PowerUp> activePowerUps = new List<PowerUp>();
-
     private BallManager ballManager;
     private int bumperHitCount;
 
@@ -89,14 +86,12 @@ public class Ball : MonoBehaviour
         ballManager = manager;
 
         bumperHitCount = 0;
-        activePowerUps.Clear();
         UpdateStats();
         UpdateParticleColor();
     }
 
     public void ResetBall()
     {
-        ClearPowerUps();
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         transform.localPosition = Vector3.zero;
@@ -104,6 +99,16 @@ public class Ball : MonoBehaviour
         bumperHitCount = 0;
         //activePowerUps.Clear();
         UpdateStats();
+    }
+
+    private void OnEnable()
+    {
+        PowerUpSystem.OnPowerUpChanged += UpdateParticleColor;
+    }
+
+    private void OnDisable()
+    {
+        PowerUpSystem.OnPowerUpChanged -= UpdateParticleColor;
     }
 
     public void AddForce(Vector2 force)
@@ -114,14 +119,6 @@ public class Ball : MonoBehaviour
     public void ReleaseBall()
     {
         ballManager.ReleaseBall(this);
-    }
-
-    public static void ApplyPowerUp(PowerUp powerUp)
-    {
-        if (powerUp != null)
-        {
-            activePowerUps.Add(powerUp);
-        }
     }
 
     public void OnHit()
@@ -144,11 +141,13 @@ public class Ball : MonoBehaviour
 
         var main = particle.main;
 
+        var activePowerUps = PowerUpSystem.activePowerUps;
+
         if (activePowerUps.Count == 0)
         {
             main.startColor = Color.white;
-            particle.Stop();
-            Debug.Log($"[POWER-UP] No active power-ups. Color reset to white.");
+            particle.gameObject.SetActive(false);
+            Debug.Log($"[POWER-UP] No active power-ups.");
             return;
         }
 
@@ -168,9 +167,7 @@ public class Ball : MonoBehaviour
         }
 
         main.startColor = currentColor;
-        particle.Play();
-
-        Debug.Log($"[POWER-UP] {string.Join(", ", activePowerUps.Select(p => p.Name))} | Color: {particle.main.startColor.color}");
+        particle.gameObject.SetActive(true);
     }
 
     void UpdateStats()
@@ -183,39 +180,16 @@ public class Ball : MonoBehaviour
             rb.gravityScale = baseGravity + (bumperHitCount * bumpMultiplier);
         }
     }
-    private void Update()
-    {
-        for (int i = activePowerUps.Count - 1; i >= 0; i--)
-        {
-            PowerUp powerUp = activePowerUps[i];
 
-            if (powerUp == null)
-            {
-                activePowerUps.RemoveAt(i);
-                UpdateParticleColor();
-                continue;
-            }
-
-            powerUp.Update(Time.deltaTime);
-
-            if (powerUp.IsExpired())
-            {
-                powerUp.OnExpire();
-                activePowerUps.RemoveAt(i);
-                UpdateParticleColor();
-            }
-        }
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        for (int i = activePowerUps.Count - 1; i >= 0; i--)
+        foreach (var powerUp in PowerUpSystem.activePowerUps.ToList())
         {
-            PowerUp powerUp = activePowerUps[i];
-            
             if (powerUp == null || powerUp.IsExpired()) continue;
 
             powerUp.OnHit(this, collision);
         }
+
         if (collision.gameObject.TryGetComponent(out ICollisionEffect collisionEffect))
         {
             collisionEffect.OnHit(this, collision);
@@ -233,22 +207,6 @@ public class Ball : MonoBehaviour
         {
             triggerEffect.OnHit(this);
         }
-    }
-
-    private void ClearPowerUps()
-    {
-        for (int i = activePowerUps.Count - 1; i >= 0; i--)
-        {
-            activePowerUps[i].OnExpire();
-        }
-
-        activePowerUps.Clear();
-        UpdateParticleColor();
-    }
-
-    private void OnDestroy()
-    {
-        ClearPowerUps();
     }
 
 }

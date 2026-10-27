@@ -5,6 +5,9 @@ public abstract class PowerUp
 {
     public abstract string Name { get; }
 
+    public static int id;
+
+    protected int instanceId;
     protected PowerUpSystem powerUpSystem;
     protected float duration;
     protected float durationLeft;
@@ -12,6 +15,7 @@ public abstract class PowerUp
         PowerUpSystem system,
         float durationSeconds)
     {
+        instanceId = id++;
         powerUpSystem = system;
         duration = Mathf.Max(0f, durationSeconds);
         durationLeft = duration;
@@ -19,6 +23,7 @@ public abstract class PowerUp
     public virtual void Update(float deltaTime)
     {
         durationLeft -= deltaTime;
+        Debug.Log($"PowerUp {Name} (ID: {instanceId}) duration left: {durationLeft}");
     }
     public virtual void OnHit(Ball ball, Collision2D collision)
     {

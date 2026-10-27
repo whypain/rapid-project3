@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PowerUpSystem : MonoBehaviour, IResetable
 {
     public static PowerUpSystem Instance { get; private set; }
+    public static event Action OnPowerUpChanged;
+    public static event Action OnInventoryChanged;
 
     [Header("Drop Settings")] 
     [SerializeField] private float dropInterval = 10f;
@@ -29,18 +33,17 @@ public class PowerUpSystem : MonoBehaviour, IResetable
     [Min(0.1f)]
     [SerializeField] private float powerUpDuration = 7f;
 
-    [Header("Inventory")]
-    [Min(1)]
-    [SerializeField] private int maxInventorySize = 9;
-    private readonly List<string> inventory = new List<string>();
+    public static Dictionary<string, int> inventory = new Dictionary<string, int>();
+    public static List<PowerUp> activePowerUps = new List<PowerUp>();
+
+    [Header("Input")]
+    [SerializeField] private InputActionReference ability1;
+    [SerializeField] private InputActionReference ability2;
+    [SerializeField] private InputActionReference ability3;
 
     private bool isActive;
     private float nextDropTime;
     private int activeWindCount;
-
-    public bool HasStoredPower => inventory.Count > 0;
-
-    public string StoredPowerType => inventory.Count > 0 ? inventory[0] : string.Empty;
 
     private void Awake()
     {
@@ -58,27 +61,47 @@ public class PowerUpSystem : MonoBehaviour, IResetable
 
     private void Update()
     {
-        HandleInventoryInput();
+        HandleAbilityInput();
 
         if (isActive)
         {
             CheckDropInterval();
         }
+
+        UpdateActivePowerUps();
     }
-    private void HandleInventoryInput()
+
+    private void UpdateActivePowerUps()
     {
-        if (Keyboard.current == null)return;
+        float deltaTime = Time.deltaTime;
 
-        // กด 1-9 เพื่อใช้ Power-Up ในช่องนั้นทันที
-        for (int i = 0; i < Mathf.Min(maxInventorySize, 9); i++)
+        for (int i = activePowerUps.Count - 1; i >= 0; i--)
         {
-            Key key = (Key)((int)Key.Digit1 + i);
+            PowerUp powerUp = activePowerUps[i];
+            powerUp.Update(deltaTime);
 
-            if (Keyboard.current[key].wasPressedThisFrame)
+            if (powerUp.IsExpired())
             {
-                ActivatePowerAtIndex(i);
-                break;
+                powerUp.OnExpire();
+                activePowerUps.RemoveAt(i);
+                OnPowerUpChanged?.Invoke();
             }
+        }
+    }
+
+    private void HandleAbilityInput()
+    {
+        if (ability1 != null && ability1.action != null && ability1.action.triggered)
+        {
+            ActivatePowerAtIndex(0);
+        }
+        else if (ability2 != null && ability2.action != null && ability2.action.triggered)
+        {
+            ActivatePowerAtIndex(1);
+        }
+        else if (ability3 != null && ability3.action != null && ability3.action.triggered)
+        {
+            ActivatePowerAtIndex(2);
         }
     }
 
@@ -124,14 +147,14 @@ public class PowerUpSystem : MonoBehaviour, IResetable
             return;
         }
 
-        GameObject selectedPrefab = available[Random.Range(0, available.Count)];
+        GameObject selectedPrefab = available[UnityEngine.Random.Range(0, available.Count)];
 
         Vector2 min = Vector2.Min(spawnAreaMin, spawnAreaMax);
         Vector2 max = Vector2.Max(spawnAreaMin, spawnAreaMax);
 
         Vector2 spawnPosition = new Vector2(
-            Random.Range(min.x, max.x),
-            Random.Range(min.y, max.y));
+            UnityEngine.Random.Range(min.x, max.x),
+            UnityEngine.Random.Range(min.y, max.y));
 
         GameObject drop = Instantiate(
             selectedPrefab,
@@ -169,32 +192,55 @@ public class PowerUpSystem : MonoBehaviour, IResetable
             return false;
         }
 
-        if (inventory.Count >= maxInventorySize)
-        {
-            Debug.LogWarning("Power-Up inventory is full!");
-            return false;
-        }
-        inventory.Add(typeLabel);
-
-        Debug.Log($"[INVENTORY] Collected {typeLabel}. " + $"Inventory: {inventory.Count}/{maxInventorySize}");
+        Debug.Log($"<color=green>Collected Power-Up: {typeLabel}</color>");
+        AddToInventory(typeLabel);
         return true;
     }
+
+    private void AddToInventory(string typeLabel)
+    {
+        if (inventory.ContainsKey(typeLabel))
+        {
+            inventory[typeLabel]++;
+        }
+        else
+        {
+            inventory[typeLabel] = 1;
+        }
+        OnInventoryChanged?.Invoke();
+    }
+
+    private void RemoveFromInventory(string typeLabel)
+    {
+        if (inventory.ContainsKey(typeLabel) && inventory[typeLabel] > 0)
+        {
+            inventory[typeLabel]--;
+            if (inventory[typeLabel] <= 0)
+            {
+                inventory.Remove(typeLabel);
+            }
+
+            OnInventoryChanged?.Invoke();
+        }
+    }
+
     public void ActivatePowerAtIndex(int index)
     {
         if (index < 0 || index >= inventory.Count)
             return;
 
-        Ball[] activeBalls = FindObjectsByType<Ball>(FindObjectsSortMode.None);
+        // Ball[] activeBalls = FindObjectsByType<Ball>();
 
-        if (activeBalls.Length == 0)
-        {
-            Debug.LogWarning("No Ball objects found.");
-            return;
-        }
+        // if (activeBalls.Length == 0)
+        // {
+        //     Debug.LogWarning("No Ball objects found.");
+        //     return;
+        // }
 
-        string typeToActivate = inventory[index];
-
+        string typeToActivate = inventory.ElementAt(index).Key;
         PowerUp powerUp = CreatePowerUp(typeToActivate);
+        activePowerUps.Add(powerUp);
+
         if (powerUp == null)
         {
             Debug.LogWarning($"Failed to create Power-Up of type: {typeToActivate}");
@@ -205,15 +251,16 @@ public class PowerUpSystem : MonoBehaviour, IResetable
             windPower.ActivateWindBarrier(windBarrierObject);
         }
 
-        Ball.ApplyPowerUp(powerUp);
+        // Ball.ApplyPowerUp(powerUp);
 
-        foreach (Ball ball in activeBalls)
-        {
-            if (ball != null)
-                ball.UpdateParticleColor();
-        }
+        // foreach (Ball ball in activeBalls)
+        // {
+        //     if (ball != null)
+        //         ball.UpdateParticleColor();
+        // }
 
-        inventory.RemoveAt(index);
+        RemoveFromInventory(typeToActivate);
+        OnPowerUpChanged?.Invoke();
     }
 
     private PowerUp CreatePowerUp(string typeLabel)
@@ -295,6 +342,10 @@ public class PowerUpSystem : MonoBehaviour, IResetable
 
         if (windBarrierObject != null)
             windBarrierObject.SetActive(false);
+
+        activePowerUps.Clear();
+        OnPowerUpChanged?.Invoke();
+        OnInventoryChanged?.Invoke();
     }
 
     private void OnDrawGizmosSelected()
