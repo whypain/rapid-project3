@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,7 +14,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     public UnityEvent<string> OnSkillDone;
     public UnityEvent<string> OnSkillCancelled;
     public UnityEvent<int> OnPhaseChanged;
-    public UnityEvent<float> OnHealthChanged;
+    public UnityEvent<float, float> OnHealthChanged;
     public UnityEvent OnDead;
 
     [Header("Boss Settings")]
@@ -93,7 +92,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         if (!isAlive) return;
 
         health = Mathf.Max(0, health - damage);
-        OnHealthChanged?.Invoke(health);
+        OnHealthChanged?.Invoke(health, damage);
         if (usingSkill != null && usingSkill.IsCancellable)
         {
             usingSkill.Cancel();
@@ -244,7 +243,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         usingSkill = null;
 
         ChangePhase(0);
-        OnHealthChanged?.Invoke(health);
+        OnHealthChanged?.Invoke(health, 0);
     }
 
     public void SkillDone(Skill skill)

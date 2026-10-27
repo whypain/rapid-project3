@@ -10,11 +10,10 @@ public class BallManager : MonoBehaviour, IResetable
 
     [SerializeField] private Transform ballParent;
     [SerializeField] private Ball ballPrefab;
-    [SerializeField] private int dupHitCount = 8;
+    [SerializeField] private int maxBalls = 30;
     [SerializeField] private TextMeshProUGUI textDupHit;
     [Header("Input")]
 
-    private int currHitCount;
     private List<Ball> activeBalls = new List<Ball>();
 
     private IObjectPool<Ball> ballPool;
@@ -90,6 +89,12 @@ public class BallManager : MonoBehaviour, IResetable
             return;
         }
 
+        if (activeBalls.Count >= maxBalls)
+        {
+            Debug.LogWarning("Maximum number of balls reached. Cannot spawn more.");
+            return;
+        }
+
         Ball newBall = ballPool.Get();
         newBall.ResetBall();
     }
@@ -112,21 +117,7 @@ public class BallManager : MonoBehaviour, IResetable
             }
         }
         activeBalls.Clear();
-        currHitCount = 0;
         SpawnBall();
-    }
-
-    public void IncrementHitCount()
-    {
-        currHitCount++;
-
-        if (currHitCount >= dupHitCount)
-        {
-            currHitCount = 0;
-            SpawnBall();
-        }
-
-        UpdateUI();
     }
 
     public void ReleaseBall(Ball ball)
@@ -141,10 +132,5 @@ public class BallManager : MonoBehaviour, IResetable
         {
             GameState.Instance.SetGameOver("No Balls?");
         }
-    }
-
-    private void UpdateUI()
-    {
-        textDupHit.text = $"{dupHitCount - currHitCount}";
     }
 }

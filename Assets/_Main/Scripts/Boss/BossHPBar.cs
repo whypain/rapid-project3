@@ -20,7 +20,7 @@ public class BossHPBar : MonoBehaviour
         boss.OnHealthChanged.AddListener(UpdateHPBar);
     }
 
-    void UpdateHPBar(float currentHealth)
+    void UpdateHPBar(float currentHealth, float damage)
     {
         if (hpFill == null)
         {

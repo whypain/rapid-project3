@@ -1,12 +1,12 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using PrimeTween;
 using UnityEngine;
 
 public class BossDeadFX : MonoBehaviour, IResetable
 {
     [SerializeField] private GameObject[] explosions;
     [SerializeField] private float explosionInterval = 0.5f;
-    [SerializeField] private float disableIn = 0.5f;
 
     private CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -17,6 +17,8 @@ public class BossDeadFX : MonoBehaviour, IResetable
 
     public async UniTask PlayExplosion()
     {
+        Tween.ShakeCamera(Camera.main, 1f, 3f, 20f);
+
         foreach (var explosion in explosions)
         {
             explosion.gameObject.SetActive(true);
