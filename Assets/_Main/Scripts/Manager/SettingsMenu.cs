@@ -59,6 +59,7 @@ public class SettingsMenu : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
 
         Time.timeScale = beforeTimeScale;
+        PlayerPrefs.Save();
     }
 
     private void SyncValues()
@@ -67,37 +68,29 @@ public class SettingsMenu : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 50f);
         float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 50f);
 
-        // float sensitivity = PlayerPrefs.GetFloat("Sensitivity", 3f);
+        Debug.Log($"Loaded Master: {masterVolume}");
 
         masterVolumeSettings.SetValue(masterVolume);
         sfxVolumeSettings.SetValue(sfxVolume);
         bgmVolumeSettings.SetValue(bgmVolume);
-
-        // sensSettings.SetValue(sensitivity);
-
     }
-
-    // private void OnSensChanged(float value)
-    // {
-    //     PlayerPrefs.SetFloat("Sensitivity", PlayerMovement.Instance.sensitivity);
-    // }
 
     private void OnMasterVolumeChanged(float value)
     {
         mixer.SetFloat("MasterVolume", LinearToDecibel(value * 0.01f));
-        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSettings.GetValue());
+        PlayerPrefs.SetFloat("MasterVolume", value);
     }
 
     private void OnSFXVolumeChanged(float value)
     {
         mixer.SetFloat("SFXVolume", LinearToDecibel(value * 0.01f));
-        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSettings.GetValue());
+        PlayerPrefs.SetFloat("SFXVolume", value);
     }
 
     private void OnBGMVolumeChanged(float value)
     {
         mixer.SetFloat("BGMVolume", LinearToDecibel(value * 0.01f));
-        PlayerPrefs.SetFloat("BGMVolume", bgmVolumeSettings.GetValue());
+        PlayerPrefs.SetFloat("BGMVolume", value);
     }
 
     private void ToggleMenu(InputAction.CallbackContext context)

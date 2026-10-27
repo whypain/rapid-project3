@@ -12,7 +12,7 @@ public class SliderSettings : MonoBehaviour
 
     private float min, max;
 
-    private void Start()
+    private void Awake()
     {
         min = slider.minValue;
         max = slider.maxValue;
@@ -34,10 +34,7 @@ public class SliderSettings : MonoBehaviour
     {
         if (inputField == null) return;
 
-        float clampedValue = Mathf.Clamp(value, min, max);
-
-        inputField.text = clampedValue.ToString("0.00");
-        OnValueChanged?.Invoke(clampedValue);
+        SetValue(value);
     }
 
     void OnInputFieldValueChanged(string value)
@@ -46,10 +43,7 @@ public class SliderSettings : MonoBehaviour
 
         if (float.TryParse(value, out float parsedValue))
         {
-            parsedValue = Mathf.Clamp(parsedValue, min, max);
-
-            slider.value = parsedValue;
-            OnValueChanged?.Invoke(parsedValue);
+            SetValue(parsedValue);
         }
     }
 
