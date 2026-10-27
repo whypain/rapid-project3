@@ -10,7 +10,7 @@ public class HandController : MonoBehaviour
     [SerializeField] private float bounciness = 3f;
 
     [Header("Input")]
-    [SerializeField] private string actionName;
+    [SerializeField] private InputActionReference actionReference;
 
     [Header("References")]
     [SerializeField] private Transform handAnchor;
@@ -24,7 +24,7 @@ public class HandController : MonoBehaviour
 
     void Start()
     {
-        action = InputManager.Instance.GetInputAction(actionName);
+        action = actionReference?.action; 
         if (action == null)
         {
             Debug.LogError("Input action not found.");
