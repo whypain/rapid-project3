@@ -23,14 +23,24 @@ public class SpecialBumper : Bumper, ICollisionEffect
         Vector2 collisionDir = ball.Velocity.normalized;
         List<Vector2> splashForces = GetFanSplashDirs(collisionDir, ballsToDupe);
 
+        bool spawned = false;
         for (int i = 0; i < splashForces.Count; i++)
         {
             Vector2 force = splashForces[i] * ball.Speed;
-            ballManager.SpawnBallAt(ball.transform.position, force);
+            spawned = ballManager.SpawnBallAt(ball.transform.position, force);
+
+            if (!spawned)
+            {
+                Debug.LogWarning("Failed to spawn ball. Maximum number of balls reached.");
+                break;
+            }
         }
 
-        SoundManager.Instance.PlaySoundFromPool(ballDupe);
-        ball.ReleaseBall();
+        if (spawned)
+        {
+            SoundManager.Instance.PlaySoundFromPool(ballDupe);
+            ball.ReleaseBall();
+        }
     }
 
     private List<Vector2> GetFanSplashDirs(Vector2 direction, int count)

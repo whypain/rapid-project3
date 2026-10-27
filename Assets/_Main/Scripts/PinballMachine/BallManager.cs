@@ -99,12 +99,19 @@ public class BallManager : MonoBehaviour, IResetable
         newBall.ResetBall();
     }
 
-    public void SpawnBallAt(Vector3 position, Vector2 velocity)
+    public bool SpawnBallAt(Vector3 position, Vector2 velocity)
     {
+        if (activeBalls.Count >= maxBalls)
+        {
+            Debug.LogWarning("Maximum number of balls reached. Cannot spawn more.");
+            return false;
+        }
+
         Ball newBall = ballPool.Get();
         newBall.ResetBall();
         newBall.transform.position = position;
         newBall.AddForce(velocity);
+        return true;
     }
 
     public void Reset()

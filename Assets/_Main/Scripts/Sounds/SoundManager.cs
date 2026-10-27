@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 using PrimeTween;
@@ -13,6 +14,9 @@ public class SoundManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private AudioSource bgmSource;
 
+    [Header("Sound Config")]
+    [SerializeField] private float minDelayBetweenSounds = 0.1f;
+
     [Header("Pool Config")]
     [SerializeField] private SoundEmitter soundEmitterPrefab;
     [SerializeField] private int defaultPoolSize = 5;
@@ -22,6 +26,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private float fadeDuration = 1f;
 
     private IObjectPool<SoundEmitter> soundPool;
+
+    private Dictionary<SoundConfig, float> nextSoundTime = new Dictionary<SoundConfig, float>();
 
     private void Awake()
     {
@@ -90,7 +96,14 @@ public class SoundManager : MonoBehaviour
     public void PlaySoundFromPool(SoundConfig config, Vector3 position = default)
     {
         if (config == null || config.clip == null) return;
+
+        if (nextSoundTime.TryGetValue(config, out float nextTime))
+        {
+            if (Time.time < nextTime) return;
+        }
+
         PlaySoundFromPool(config.clip, config.randomPitchRange, config.mixerGroup, position, config.volume);
+        nextSoundTime[config] = Time.time + minDelayBetweenSounds;
     }
 
     public async UniTask PlayDelayedSoundFromPool(SoundConfig config, float delay, Vector3 position = default)
