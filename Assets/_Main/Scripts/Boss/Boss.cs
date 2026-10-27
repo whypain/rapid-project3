@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -102,7 +103,7 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
 
         if (health <= 0)
         {
-            Die();
+            Die().Forget();
             return;
         }
 
@@ -193,13 +194,14 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         UseSkill(skillToUse);
     }
 
-    private void Die()
+    private async UniTask Die()
     {
         // Handle boss death logic here
         Debug.Log("Boss defeated!");
         OnDead?.Invoke();
         SoundManager.Instance.PlaySoundFromPool(bossDie);
 
+        await VFXSystem.Instance.PlayVFX(VFXType.BossExplosion, transform.position);
         GameState.Instance.SetGameOver();
     }
 

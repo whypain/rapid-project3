@@ -473,7 +473,7 @@ MonoBehaviour:
   bossHurt: {fileID: 11400000, guid: 7cfcb17f96d2f4d49b49ca23db7fc2c9, type: 2}
   bossDie: {fileID: 11400000, guid: 050d31517668fcd4daee706493ee4041, type: 2}
   bossPhase1: {fileID: 11400000, guid: 96be0c2816d37f741bb1b9d2c70a9671, type: 2}
-  damageDebug: 30
+  damageDebug: 100
 --- !u!61 &113804628
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -843,6 +843,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
   actionMap: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!1 &227938470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 227938471}
+  - component: {fileID: 227938472}
+  m_Layer: 0
+  m_Name: VFXSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &227938471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227938470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &227938472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227938470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60297dd9486843d448cab2e0d673d755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VFXSystem
+  vfxs:
+  - Type: 1
+    Duration: 3
+    Prefab: {fileID: 5792570050333391826, guid: 9359aaee3795c0240ab94fe4c3649c5c, type: 3}
+    Offset: {x: 0.14, y: 0.81, z: 0}
+  - Type: 0
+    Duration: 0.2
+    Prefab: {fileID: 6600977305208272791, guid: af3d59ee068fb2546bae4ae7f0a351c6, type: 3}
+    Offset: {x: 0, y: 0, z: 0}
 --- !u!1 &300160298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,7 +3341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d509cd3b28e564ea4d6d896ded5412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceBumper
-  forceMagnitude: 5
+  forceMagnitude: 15
   bumperCollider: {fileID: 897252054}
   isActive: 1
 --- !u!61 &897252054
@@ -3776,7 +3829,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 6.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1307867509}
   m_Father: {fileID: 1507391881}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1080637502
@@ -4491,6 +4545,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246740930}
   m_CullTransparentMesh: 1
+--- !u!1 &1307867508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1307867509}
+  m_Layer: 0
+  m_Name: explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1307867509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307867508}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1080637501}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1323286492
 GameObject:
   m_ObjectHideFlags: 0
@@ -6655,7 +6740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -63.214783, y: -24.960815}
+  m_AnchoredPosition: {x: -63.214844, y: -24.960815}
   m_SizeDelta: {x: 540.2, y: 473.4}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1840298621
@@ -7699,3 +7784,4 @@ SceneRoots:
   - {fileID: 384879806}
   - {fileID: 1825217029}
   - {fileID: 2007204396}
+  - {fileID: 227938471}

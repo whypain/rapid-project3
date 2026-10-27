@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Bumper : MonoBehaviour, ICollisionEffect
@@ -14,7 +15,9 @@ public class Bumper : MonoBehaviour, ICollisionEffect
     public void Deactivate()
     {
         gameObject.SetActive(false);
+
         SoundManager.Instance.PlaySoundFromPool(bumperDestroyed);
+        VFXSystem.Instance.PlayVFX(VFXType.BumperExplosion, transform.position).Forget();
     }
 }
 
