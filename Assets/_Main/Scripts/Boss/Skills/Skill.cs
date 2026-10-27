@@ -13,6 +13,7 @@ public abstract class Skill : MonoBehaviour
 
     [SerializeField] private SoundConfig skillSound;
     [SerializeField] private float delaySound;
+    [SerializeField] private ScreenShake screenShake;
 
     [SerializeField] protected Boss owner;
     private float lastUsedTime;
@@ -38,6 +39,7 @@ public abstract class Skill : MonoBehaviour
     {
         lastUsedTime = Time.time;
         if (visual != null) visual.SetActive(true);
+        if (screenShake != null) screenShake.Shake();
         if (skillSound != null)
         {
             await SoundManager.Instance.PlayDelayedSoundFromPool(skillSound, delaySound);

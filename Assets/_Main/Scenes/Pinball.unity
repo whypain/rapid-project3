@@ -433,17 +433,17 @@ MonoBehaviour:
   OnDead:
     m_PersistentCalls:
       m_Calls: []
-  baseHealth: 100
+  baseHealth: 500
   attackInterval: 5
   delayOnPhaseChange: 1
   phases:
-  - healthThreshold: 97
+  - healthThreshold: 497
     openningSkill: {fileID: 0}
     skills: []
     onPhaseStart:
       m_PersistentCalls:
         m_Calls: []
-  - healthThreshold: 80
+  - healthThreshold: 490
     openningSkill: {fileID: 1878692174}
     skills:
     - {fileID: 423344862}
@@ -452,7 +452,7 @@ MonoBehaviour:
     onPhaseStart:
       m_PersistentCalls:
         m_Calls: []
-  - healthThreshold: 50
+  - healthThreshold: 450
     openningSkill: {fileID: 0}
     skills:
     - {fileID: 423344862}
@@ -1517,6 +1517,7 @@ MonoBehaviour:
   visual: {fileID: 302581585}
   skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
   delaySound: 0
+  screenShake: {fileID: 0}
   owner: {fileID: 0}
   collider: {fileID: 1678327327}
   sweepDuration: 1
@@ -1620,6 +1621,7 @@ MonoBehaviour:
   visual: {fileID: 598391709}
   skillSound: {fileID: 0}
   delaySound: 0
+  screenShake: {fileID: 0}
   owner: {fileID: 0}
   chargeDuration: 3
   nextSkill: {fileID: 1821047032}
@@ -1754,6 +1756,7 @@ MonoBehaviour:
   visual: {fileID: 0}
   skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
   delaySound: 0
+  screenShake: {fileID: 0}
   owner: {fileID: 0}
   collider: {fileID: 879726124}
   sweepDuration: 0.5
@@ -7178,6 +7181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1821047031}
   - component: {fileID: 1821047032}
+  - component: {fileID: 1821047033}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -7218,9 +7222,26 @@ MonoBehaviour:
   visual: {fileID: 1876624015}
   skillSound: {fileID: 11400000, guid: 33b3f0be1e5e41e4481ef016fd46028f, type: 2}
   delaySound: 0
+  screenShake: {fileID: 1821047033}
   owner: {fileID: 113804627}
   collider: {fileID: 21071239}
   sweepDuration: 5
+--- !u!114 &1821047033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821047030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103521aa5902334468b07532f85729c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenShake
+  camera: {fileID: 1111872378}
+  shakeStrength: 1
+  shakeDuration: 5
+  shakeFrequency: 20
 --- !u!1001 &1825217029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7894,6 +7915,7 @@ MonoBehaviour:
   visual: {fileID: 0}
   skillSound: {fileID: 0}
   delaySound: 0
+  screenShake: {fileID: 0}
   owner: {fileID: 0}
   summonDelay: 0.5
   summons:

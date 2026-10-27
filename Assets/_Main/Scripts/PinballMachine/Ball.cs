@@ -194,7 +194,7 @@ public class Ball : MonoBehaviour
         {
             collisionEffect.OnHit(this, collision);
         }
-        else
+        else if (!collision.gameObject.CompareTag("Ball"))
         {
             // If the ball hits a wall or any other object without a collision effect, play the wall hit sound
             SoundManager.Instance.PlaySoundFromPool(ballHitWall);
