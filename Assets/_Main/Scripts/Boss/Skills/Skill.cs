@@ -14,7 +14,7 @@ public abstract class Skill : MonoBehaviour
     [SerializeField] private SoundConfig skillSound;
     [SerializeField] private float delaySound;
 
-    protected Boss owner;
+    [SerializeField] protected Boss owner;
     private float lastUsedTime;
 
     public void Initialize(Boss boss)
@@ -52,5 +52,10 @@ public abstract class Skill : MonoBehaviour
     public virtual void Cancel()
     {
         visual?.SetActive(false);
+    }
+
+    protected void Done()
+    {
+        owner.SkillDone(this);
     }
 }

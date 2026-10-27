@@ -22,6 +22,7 @@ public class SkillCharge : Skill
 
     public override void Cancel()
     {
+        owner.SkillCancelled(this);
         cancelTokenSource.Cancel();
         base.Cancel();
     }

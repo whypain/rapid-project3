@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 113804628}
   - component: {fileID: 113804627}
   - component: {fileID: 113804629}
+  - component: {fileID: 113804630}
   m_Layer: 0
   m_Name: Script
   m_TagString: Untagged
@@ -355,9 +356,63 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 113804630}
+        m_TargetAssemblyTypeName: BossAnimator, Assembly-CSharp
+        m_MethodName: PlaySkillAnimation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSkillDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 113804630}
+        m_TargetAssemblyTypeName: BossAnimator, Assembly-CSharp
+        m_MethodName: StopAnimation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSkillCancelled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 113804630}
+        m_TargetAssemblyTypeName: BossAnimator, Assembly-CSharp
+        m_MethodName: CancelAnimation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPhaseChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 113804630}
+        m_TargetAssemblyTypeName: BossAnimator, Assembly-CSharp
+        m_MethodName: SetBossPhase
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -478,6 +533,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAnimator
   anim: {fileID: 131225324}
+--- !u!114 &113804630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113804625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b258a10e8b5f84ab7fbbf728f919ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossAnimator
+  anim: {fileID: 1080637503}
 --- !u!1 &131225321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,6 +1217,7 @@ MonoBehaviour:
   visual: {fileID: 302581585}
   skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
   delaySound: 0
+  owner: {fileID: 0}
   collider: {fileID: 1678327327}
   sweepDuration: 1
 --- !u!1 &384879804
@@ -1251,6 +1320,7 @@ MonoBehaviour:
   visual: {fileID: 598391709}
   skillSound: {fileID: 0}
   delaySound: 0
+  owner: {fileID: 0}
   chargeDuration: 3
   nextSkill: {fileID: 1821047032}
 --- !u!1 &414543152
@@ -1384,6 +1454,7 @@ MonoBehaviour:
   visual: {fileID: 0}
   skillSound: {fileID: 11400000, guid: c6ee1858f77e0024480d960c0f735233, type: 2}
   delaySound: 0
+  owner: {fileID: 0}
   collider: {fileID: 879726124}
   sweepDuration: 0.5
 --- !u!1 &472524683
@@ -6410,6 +6481,7 @@ MonoBehaviour:
   visual: {fileID: 1876624015}
   skillSound: {fileID: 11400000, guid: 33b3f0be1e5e41e4481ef016fd46028f, type: 2}
   delaySound: 0
+  owner: {fileID: 113804627}
   collider: {fileID: 21071239}
   sweepDuration: 5
 --- !u!1001 &1825217029
@@ -6960,6 +7032,7 @@ MonoBehaviour:
   visual: {fileID: 0}
   skillSound: {fileID: 0}
   delaySound: 0
+  owner: {fileID: 0}
   summonDelay: 0.5
   summons:
   - {fileID: 712440754}

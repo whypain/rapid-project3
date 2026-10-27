@@ -12,6 +12,7 @@ public class SkillToggleCollider : Skill
         collider.enabled = true;
         await UniTask.Delay(TimeSpan.FromSeconds(sweepDuration));
         collider.enabled = false;
+        Done();
     }
 
     public override void Cancel()

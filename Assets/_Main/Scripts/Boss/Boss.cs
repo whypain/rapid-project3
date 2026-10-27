@@ -11,6 +11,8 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
     public float BaseHealth => baseHealth;
 
     public UnityEvent<string> OnSkillUsed;
+    public UnityEvent<string> OnSkillDone;
+    public UnityEvent<string> OnSkillCancelled;
     public UnityEvent<int> OnPhaseChanged;
     public UnityEvent<float> OnHealthChanged;
     public UnityEvent OnDead;
@@ -123,6 +125,11 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         }
     }
 
+    public void SkillCancelled(Skill skill)
+    {
+        OnSkillCancelled?.Invoke(skill.Name);
+    }
+
     private void ChangePhase(int phase)
     {
         Debug.Log($"Phase changed to {phase}");
@@ -230,9 +237,16 @@ public class Boss : MonoBehaviour, ICollisionEffect, IResetable
         currentPhase = 0;
         phaseChangeTimer = 0;
         attackTimer = 0;
+
+        usingSkill?.Cancel();
         usingSkill = null;
 
         ChangePhase(0);
         OnHealthChanged?.Invoke(health);
+    }
+
+    public void SkillDone(Skill skill)
+    {
+        OnSkillDone?.Invoke(skill.Name);
     }
 }

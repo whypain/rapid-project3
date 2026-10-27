@@ -15,4 +15,16 @@ public class BossAnimator : MonoBehaviour
         Debug.Log($"Playing skill animation: {skillName}");
         anim.SetTrigger(skillName);
     }
+
+    public void StopAnimation(string skillName)
+    {
+        Debug.Log($"Stopping skill animation: {skillName}");
+        anim.SetTrigger(skillName + "Done");
+    }
+
+    public void CancelAnimation(string skillName)
+    {
+        Debug.Log($"Cancelling skill animation: {skillName}");
+        anim.SetTrigger(skillName + "Cancel");
+    }
 }
