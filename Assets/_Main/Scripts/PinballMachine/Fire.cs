@@ -5,13 +5,15 @@ public class Fire : PowerUp
     private readonly GameObject explosionEffectPrefab;
     public Fire(
         PowerUpSystem system,
-        Ball targetBall,
         float durationSeconds,
         GameObject explosionPrefab)
-        : base(system, targetBall, durationSeconds)
+        : base(system,  durationSeconds)
     {
         explosionEffectPrefab = explosionPrefab;
     }
+
+    public override string Name => "fire";
+
     public override void OnHit(Ball ball, Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Bumper"))
@@ -20,6 +22,9 @@ public class Fire : PowerUp
         {
             Object.Instantiate(explosionEffectPrefab, ball.transform.position, Quaternion.identity);
         }
-        collision.gameObject.SetActive(false);
+        if (collision.gameObject.TryGetComponent(out Bumper bumper))
+        {
+            bumper.Deactivate();
+        }
     }
 }

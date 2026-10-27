@@ -2,9 +2,19 @@ using UnityEngine;
 
 public class Bumper : MonoBehaviour, ICollisionEffect
 {
-    public void OnHit(Ball ball, Collision2D collision)
+    [SerializeField] private SoundConfig bumperHit;
+    [SerializeField] private SoundConfig bumperDestroyed;
+
+    public virtual void OnHit(Ball ball, Collision2D collision)
     {
         ball.OnHit();
+        SoundManager.Instance.PlaySoundFromPool(bumperHit);
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+        SoundManager.Instance.PlaySoundFromPool(bumperDestroyed);
     }
 }
 

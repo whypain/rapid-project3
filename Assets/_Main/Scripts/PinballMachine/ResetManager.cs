@@ -8,8 +8,21 @@ public interface IResetable
 
 public class ResetManager : MonoBehaviour
 {
+    public static ResetManager Instance { get; private set; } 
+
     [SerializeField] private InputActionReference actionRef;
     private InputAction action;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -17,6 +30,11 @@ public class ResetManager : MonoBehaviour
 
         action.Enable();
         action.performed += OnReset;
+    }
+
+    public void Reset()
+    {
+        OnReset(new InputAction.CallbackContext());
     }
 
     private void OnReset(InputAction.CallbackContext _)

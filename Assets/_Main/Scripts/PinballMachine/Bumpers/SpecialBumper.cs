@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialBumper : MonoBehaviour, ICollisionEffect
+public class SpecialBumper : Bumper, ICollisionEffect
 {
     [SerializeField] private float spread = 45f;
     [SerializeField] private int hitsToDupe = 3;
 
-    public void OnHit(Ball ball, Collision2D collision)
+    [Header("Sound Reference")]
+    [SerializeField] private SoundConfig ballDupe;
+
+    public override void OnHit(Ball ball, Collision2D collision)
     {
+        base.OnHit(ball, collision);
         if (ball.BumperHitCount <= 0) return;
         if (BallManager.Instance == null) return;
 
@@ -25,6 +29,7 @@ public class SpecialBumper : MonoBehaviour, ICollisionEffect
             ballManager.SpawnBallAt(ball.transform.position, force);
         }
 
+        SoundManager.Instance.PlaySoundFromPool(ballDupe);
         ball.ReleaseBall();
     }
 

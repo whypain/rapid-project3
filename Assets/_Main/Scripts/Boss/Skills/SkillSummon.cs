@@ -8,6 +8,8 @@ public class SkillSummon : Skill, IResetable
     [SerializeField] private float summonDelay = 0.5f;
     [SerializeField] private Summoning[] summons;
 
+    [SerializeField] private SoundConfig summonSound;
+
     CancellationTokenSource summonCts;
 
     public override bool CanUse()
@@ -44,6 +46,7 @@ public class SkillSummon : Skill, IResetable
             if (summons[i] == null || summons[i].IsActive) continue;
 
             summons[i].Activate();
+            SoundManager.Instance.PlaySoundFromPool(summonSound);
             await UniTask.Delay(TimeSpan.FromSeconds(summonDelay), cancellationToken: summonCts.Token);
         }
         await UniTask.Yield();
